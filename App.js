@@ -86,6 +86,10 @@ export default class App extends Component<{}> {
         </Modal>
 
         <ActionButton buttonColor="rgba(231,76,60,1)" onPress={() => this.setModalVisible(true) } />
+        <ActionButton
+          buttonColor="rgba(50,56,117,1)"
+          offsetX={270} icon={(<Text style={{color: 'white'}}>*</Text>)}
+          onPress={() => this.showMaker('mainMarkers') } />
       </View>
     );
   }
