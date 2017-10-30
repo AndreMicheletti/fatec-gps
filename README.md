@@ -1,5 +1,7 @@
 # Fatec GPS
 
+![FatecGPS App](https://imgur.com/a/Y3fVK)
+
 Aplicativo Mobile feito com [react-native](https://facebook.github.io/react-native/) como TCC para a FatecSP
 
 ## Descrição
