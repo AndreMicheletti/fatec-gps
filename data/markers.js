@@ -1,98 +1,104 @@
 import React from 'react'
 
 // ######################## MARKERS COORDINATES ########################
+// The structure is:
+// interestPoints is an JS object, where each key is and array of markers objs
 
-// --------------- geral ---------------
-export default interestPoints = [
-  {
-    title: "Prédio A/B - Bloco A",
-    subtitle: '',
-    color: 'rgba(255, 255, 0)',
-    coords: {
-      latitude: -23.529289,
-      longitude: -46.632550,
-      latitudeDelta: 0.002,
-      longitudeDelta: 0.002,
-    }
-  },
-  {
-    title: "Prédio A/B - Bloco B",
-    subtitle: '',
-    color: 'rgba(255, 255, 0)',
-    coords: {
-      latitude: -23.529145,
-      longitude: -46.632323,
-      latitudeDelta: 0.002,
-      longitudeDelta: 0.002,
-    }
-  },
-  {
-    title: "Edificio Santhiago",
-    subtitle: '',
-    color: 'rgba(255, 255, 0)',
-    coords: {
-      latitude: -23.529987,
-      longitude: -46.632485,
-      latitudeDelta: 0.002,
-      longitudeDelta: 0.002,
-    }
-  },
-  {
-    title: "Centro Acadêmico",
-    subtitle: '',
-    color: 'rgba(255, 255, 0)',
-    coords: {
-      latitude: -23.530069,
-      longitude: -46.632816,
-      latitudeDelta: 0.002,
-      longitudeDelta: 0.002,
-    }
-  },
-  {
-    title: "Etesp",
-    subtitle: '',
-    color: 'rgba(255, 255, 0)',
-    coords: {
-      latitude: -23.528951,
-      longitude: -46.633147,
-      latitudeDelta: 0.002,
-      longitudeDelta: 0.002,
-    }
-  },
-  {
-    title: 'biblioteca',
-    subtitle: '',
-    color: 'rgba(255, 255, 0)',
-    coords: {
-      latitude: -23.529888,
-      longitude: -46.632472,
-      latitudeDelta: 0.002,
-      longitudeDelta: 0.002,
+export default interestPoints = {
+
+  // Markers Principais
+  mainMarkers: [
+    {
+      title: "Prédio A/B - Bloco A",
+      subtitle: '',
+      color: 'rgba(255, 255, 0)',
+      coords: {
+        latitude: -23.529289,
+        longitude: -46.632550,
+        latitudeDelta: 0.002,
+        longitudeDelta: 0.002,
+      }
     },
-  },
-  {
-    title: 'estagio',
-    subtitle: '',
-    color: 'rgba(255, 255, 0)',
-    coords: {
-      latitude: -23.530133,
-      longitude: -46.632507,
-      latitudeDelta: 0.002,
-      longitudeDelta: 0.002,
+    {
+      title: "Prédio A/B - Bloco B",
+      subtitle: '',
+      color: 'rgba(255, 255, 0)',
+      coords: {
+        latitude: -23.529145,
+        longitude: -46.632323,
+        latitudeDelta: 0.002,
+        longitudeDelta: 0.002,
+      }
     },
-  },
-  {
-    title: 'informatica',
-    subtitle: '',
-    color: 'rgba(255, 255, 0)',
-    coords: {
-      latitude: -23.529836,
-      longitude: -46.632550,
-      latitudeDelta: 0.002,
-      longitudeDelta: 0.002,
+    {
+      title: "Edificio Santhiago",
+      subtitle: '',
+      color: 'rgba(255, 255, 0)',
+      coords: {
+        latitude: -23.529987,
+        longitude: -46.632485,
+        latitudeDelta: 0.002,
+        longitudeDelta: 0.002,
+      }
     },
-  },
-  {
+    {
+      title: "Centro Acadêmico",
+      subtitle: '',
+      color: 'rgba(255, 255, 0)',
+      coords: {
+        latitude: -23.530069,
+        longitude: -46.632816,
+        latitudeDelta: 0.002,
+        longitudeDelta: 0.002,
+      }
+    },
+    {
+      title: "Etesp",
+      subtitle: '',
+      color: 'rgba(255, 255, 0)',
+      coords: {
+        latitude: -23.528951,
+        longitude: -46.633147,
+        latitudeDelta: 0.002,
+        longitudeDelta: 0.002,
+      }
+    }
+  ],
+  // Markers Especiais
+  biblioteca: [{
+      title: 'biblioteca',
+      subtitle: '',
+      color: 'rgba(255, 255, 0)',
+      coords: {
+        latitude: -23.529888,
+        longitude: -46.632472,
+        latitudeDelta: 0.002,
+        longitudeDelta: 0.002,
+      },
+    }],
+  estagio: [{
+      title: 'estagio',
+      subtitle: '',
+      color: 'rgba(255, 255, 0)',
+      coords: {
+        latitude: -23.530133,
+        longitude: -46.632507,
+        latitudeDelta: 0.002,
+        longitudeDelta: 0.002,
+      },
+    }],
+  informatica: [{
+      title: 'informatica',
+      subtitle: '',
+      color: 'rgba(255, 255, 0)',
+      coords: {
+        latitude: -23.529836,
+        longitude: -46.632550,
+        latitudeDelta: 0.002,
+        longitudeDelta: 0.002,
+      },
+    }],
+  secretaria: [{
     title: 'Secretaria',
     subtitle: 'Edifício Santiago - Térreo',
     color: 'rgba(255, 255, 0)',
@@ -102,9 +108,9 @@ export default interestPoints = [
       latitudeDelta: 0.002,
       longitudeDelta: 0.002,
     },
-  },
+  }],
   // ---------------- departamento geral ----------------
-  {
+  dpt_geral: [{
     title: 'geral',
     subtitle: '',
     color: 'rgba(255, 255, 0)',
@@ -114,9 +120,9 @@ export default interestPoints = [
       latitudeDelta: 0.002,
       longitudeDelta: 0.002,
     },
-  },
+  }],
   // --------------- outros departamentos ---------------
-  {
+  edificio: [{
     title: 'edificio',
     subtitle: '',
     color: 'rgba(255, 255, 0)',
@@ -126,8 +132,8 @@ export default interestPoints = [
       latitudeDelta: 0.002,
       longitudeDelta: 0.002,
     },
-  },
-  { // arrumar
+  }],
+  eletronica: [{ // arrumar
     title: 'eletronica',
     subtitle: '',
     color: 'rgba(255, 255, 0)',
@@ -137,8 +143,8 @@ export default interestPoints = [
       latitudeDelta: 0.002,
       longitudeDelta: 0.002,
     },
-  },
-  { // arrumar
+  }],
+  hidraulica: [{ // arrumar
     title: 'hidraulica',
     subtitle: '',
     color: 'rgba(255, 255, 0)',
@@ -148,8 +154,8 @@ export default interestPoints = [
       latitudeDelta: 0.002,
       longitudeDelta: 0.002,
     },
-  },
-  { // arrumar
+  }],
+  materiais: [{ // arrumar
     title: 'materiais',
     subtitle: '',
     color: 'rgba(255, 255, 0)',
@@ -159,8 +165,8 @@ export default interestPoints = [
       latitudeDelta: 0.002,
       longitudeDelta: 0.002,
     },
-  },
-  {
+  }],
+  mecanica: [{
     title: 'mecanica',
     subtitle: '',
     color: 'rgba(255, 255, 0)',
@@ -170,8 +176,8 @@ export default interestPoints = [
       latitudeDelta: 0.002,
       longitudeDelta: 0.002,
     },
-  },
-  { // arrumar
+  }],
+  processos: [{ // arrumar
     title: 'processos',
     subtitle: '',
     color: 'rgba(255, 255, 0)',
@@ -181,8 +187,8 @@ export default interestPoints = [
       latitudeDelta: 0.002,
       longitudeDelta: 0.002,
     },
-  },
-  { // arrumar
+  }],
+  projetos: [{ // arrumar
     title: 'projetos',
     subtitle: '',
     color: 'rgba(255, 255, 0)',
@@ -192,8 +198,8 @@ export default interestPoints = [
       latitudeDelta: 0.002,
       longitudeDelta: 0.002,
     },
-  },
-  { // arrumar
+  }],
+  secretariado: [{ // arrumar
     title: 'secretariado',
     subtitle: '',
     color: 'rgba(255, 255, 0)',
@@ -203,8 +209,8 @@ export default interestPoints = [
       latitudeDelta: 0.002,
       longitudeDelta: 0.002,
     },
-  },
-  { // arrumar
+  }],
+  soldagem: [{ // arrumar
     title: 'soldagem',
     subtitle: '',
     color: 'rgba(255, 255, 0)',
@@ -214,8 +220,8 @@ export default interestPoints = [
       latitudeDelta: 0.002,
       longitudeDelta: 0.002,
     },
-  },
-  {
+  }],
+  tecnologia: [{
     title: 'tecnologia',
     subtitle: '',
     color: 'rgba(255, 255, 0)',
@@ -225,8 +231,8 @@ export default interestPoints = [
       latitudeDelta: 0.002,
       longitudeDelta: 0.002,
     },
-  },
-  {
+  }],
+  turismo: [{
     title: 'turismo',
     subtitle: '',
     color: 'rgba(255, 255, 0)',
@@ -236,5 +242,5 @@ export default interestPoints = [
       latitudeDelta: 0.002,
       longitudeDelta: 0.002,
     }
-  }
-]
+  }]
+}

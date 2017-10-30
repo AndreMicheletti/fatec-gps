@@ -20,9 +20,11 @@
   },
   "dependencies": {
     "expo": "^21.0.0",
+    "ip": "^1.1.5",
     "react": "16.0.0-alpha.12",
     "react-native": "^0.48.4",
     "react-native-action-button": "^2.8.1",
-    "react-native-maps": "^0.17.1"
+    "react-native-maps": "^0.17.1",
+    "watchman": "^0.1.8"
   }
 }
