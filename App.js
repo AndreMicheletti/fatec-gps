@@ -90,7 +90,7 @@ export default class App extends React.Component<{}> {
 
           <ModalContents
             onButtonPress={() => this.setModalVisible(!this.state.modalVisible)}
-            showMaker={this.showMaker}
+            showMaker={this.showMaker.bind(this)}
           />
         </Modal>
 
