@@ -50,14 +50,14 @@ export default class App extends Component<{}> {
           style={styles.mapStyle}
           initialRegion={fatecRegion}
           region={fatecRegion}
+          showsPointsOfInterest={false}
           scrollEnabled={false}
           rotateEnabled={false}
           zoomEnabled={false}
           pitchEnabled={false}
           minZoomLevel={15}
-          maxZoomLevel={25}
-          showsUserLocation={true}
-          showsMyLocationButton={false}>
+          moveOnMarkerPress={false}
+          cacheEnabled>
             {/* Render Markers */}
             {this.renderMarkers()}
         </MapView>
@@ -71,7 +71,7 @@ export default class App extends Component<{}> {
           <View style={{marginTop: 22}}>
             <View style= {styles.modal}>
               <ScrollView>
-                <Text style= {styles.subtitulo}>SALAS ESPECIAIS</Text>
+                <Text style= {styles.subtitulo}>Legenda</Text>
                 <TextLink text='click me' onPress={() => this.showMaker('edificio') } />
               </ScrollView>
 
@@ -79,17 +79,17 @@ export default class App extends Component<{}> {
                 onPress={() => this.setModalVisible(!this.state.modalVisible)}
                 style={styles.closeButtonStyle}
                 title="Fechar"
-                color="#841584"
+                color="#e74c3c"
               />
             </View>
           </View>
         </Modal>
 
-        <ActionButton buttonColor="rgba(231,76,60,1)">
+        <ActionButton buttonColor="#e74c3c">
           <ActionButton.Item buttonColor="#03406A" title="Legenda" onPress={() => this.setModalVisible(true) }>
             <Text style={styles.menuItem}>{"?"}</Text>
           </ActionButton.Item>
-          <ActionButton.Item buttonColor="#1D7373" title="Resetar" onPress={() => this.showMaker('mainMarkers') }>
+          <ActionButton.Item buttonColor="#1D7373" title="Mostrar Todos" onPress={() => this.showMaker('mainMarkers') }>
             <Text style={styles.menuItem}>{"!"}</Text>
           </ActionButton.Item>
         </ActionButton>
@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
   modal:{
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'column',
   },
   subtitulo:{
     color: 'black',
@@ -112,12 +113,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   closeButtonStyle: {
-    padding: 5,
-    borderRadius: 5
+    paddingLeft: 25,
+    paddingRight: 25,
+    borderRadius: 5,
   },
   menuItem: {
-    fontSize: 22,
-    fontWeight: "600",
+    fontSize: 28,
+    fontWeight: "400",
     color: 'white'
   }
 })
