@@ -85,11 +85,14 @@ export default class App extends Component<{}> {
           </View>
         </Modal>
 
-        <ActionButton buttonColor="rgba(231,76,60,1)" onPress={() => this.setModalVisible(true) } />
-        <ActionButton
-          buttonColor="rgba(50,56,117,1)"
-          offsetX={270} icon={(<Text style={{color: 'white'}}>*</Text>)}
-          onPress={() => this.showMaker('mainMarkers') } />
+        <ActionButton buttonColor="rgba(231,76,60,1)">
+          <ActionButton.Item buttonColor="#03406A" title="Legenda" onPress={() => this.setModalVisible(true) }>
+            <Text style={styles.menuItem}>{"?"}</Text>
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor="#1D7373" title="Resetar" onPress={() => this.showMaker('mainMarkers') }>
+            <Text style={styles.menuItem}>{"!"}</Text>
+          </ActionButton.Item>
+        </ActionButton>
       </View>
     );
   }
@@ -111,5 +114,10 @@ const styles = StyleSheet.create({
   closeButtonStyle: {
     padding: 5,
     borderRadius: 5
+  },
+  menuItem: {
+    fontSize: 22,
+    fontWeight: "600",
+    color: 'white'
   }
 })
