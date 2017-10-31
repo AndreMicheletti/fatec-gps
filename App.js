@@ -21,7 +21,7 @@ export default class App extends React.Component<{}> {
 
   // Modal
   state = {
-    modalVisible: false,
+    modalVisible: true,
     showMarkers: 'mainMarkers'
   }
 
