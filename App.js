@@ -25,7 +25,7 @@ export default class App extends React.Component<{}> {
     showMarkers: 'mainMarkers'
   }
 
-  componentWillMount() {
+  componentDidMount() {
     BackHandler.addEventListener('resetMarkersEvent', this.onBackPressed.bind(this));
   }
 
