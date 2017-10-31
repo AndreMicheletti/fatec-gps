@@ -1,10 +1,14 @@
-import React, { Component } from 'react';
-import { Modal, Text, Button, View, StyleSheet, ScrollView } from 'react-native';
+import React from 'react';
+import {
+   BackHandler, Modal, Text, Button, View, StyleSheet
+ } from 'react-native';
+
 import MapView from 'react-native-maps';
 import ActionButton from 'react-native-action-button'; // https://github.com/mastermoo/react-native-action-button
 
-import TextLink from './components/TextLink'
+import ModalContents  from './components/ModalContents'
 import interestPoints from './data/markers'
+
 
 const fatecRegion = {
   latitude: -23.529202,
@@ -13,12 +17,28 @@ const fatecRegion = {
   longitudeDelta: 0.002,
 }
 
-export default class App extends Component<{}> {
+export default class App extends React.Component<{}> {
 
   // Modal
   state = {
     modalVisible: false,
     showMarkers: 'mainMarkers'
+  }
+
+  componentWillMount() {
+    BackHandler.addEventListener('resetMarkersEvent', this.onBackPressed.bind(this));
+  }
+
+  onBackPressed() {
+    if (this) {
+      if (this.state.showMarkers == 'mainMarkers') {
+        return false;
+      } else {
+        this.showMaker('mainMarkers')
+        return true;
+      }
+    }
+    return false;
   }
 
   setModalVisible(visible) {
@@ -68,21 +88,10 @@ export default class App extends Component<{}> {
           visible={this.state.modalVisible}
           onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}>
 
-          <View style={{marginTop: 22}}>
-            <View style= {styles.modal}>
-              <ScrollView>
-                <Text style= {styles.subtitulo}>Legenda</Text>
-                <TextLink text='click me' onPress={() => this.showMaker('edificio') } />
-              </ScrollView>
-
-              <Button
-                onPress={() => this.setModalVisible(!this.state.modalVisible)}
-                style={styles.closeButtonStyle}
-                title="Fechar"
-                color="#e74c3c"
-              />
-            </View>
-          </View>
+          <ModalContents
+            onButtonPress={() => this.setModalVisible(!this.state.modalVisible)}
+            showMaker={this.showMaker}
+          />
         </Modal>
 
         <ActionButton buttonColor="#e74c3c">
@@ -102,12 +111,19 @@ const styles = StyleSheet.create({
   mapStyle: {
     flex: 1
   },
-  modal:{
-    alignItems: 'center',
-    justifyContent: 'center',
+  modalContainer:{
+    flex: 1,
     flexDirection: 'column',
   },
+  modalText:{
+    marginTop: 22,
+    paddingLeft: 15,
+    paddingRight: 8,
+    flex: 3,
+  },
   subtitulo:{
+    alignItems: 'center',
+    justifyContent: 'center',
     color: 'black',
     fontWeight: 'bold',
     fontSize: 30,
@@ -116,6 +132,7 @@ const styles = StyleSheet.create({
     paddingLeft: 25,
     paddingRight: 25,
     borderRadius: 5,
+    flex: 2
   },
   menuItem: {
     fontSize: 28,

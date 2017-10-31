@@ -77,7 +77,7 @@ export default interestPoints = {
   ],
   // Markers Especiais
   biblioteca: [{
-      title: 'biblioteca',
+      title: 'Biblioteca',
       subtitle: '',
       color: '#e74c3c',
       coords: {
@@ -88,7 +88,7 @@ export default interestPoints = {
       },
     }],
   estagio: [{
-      title: 'estagio',
+      title: 'Departamento de Estágio',
       subtitle: '',
       color: '#e74c3c',
       coords: {
@@ -99,7 +99,7 @@ export default interestPoints = {
       },
     }],
   informatica: [{
-      title: 'informatica',
+      title: 'Laboratorios de Informática',
       subtitle: '',
       color: '#e74c3c',
       coords: {
@@ -110,8 +110,8 @@ export default interestPoints = {
       },
     }],
   secretaria: [{
-    title: 'Secretaria',
-    subtitle: 'Edifício Santiago - Térreo',
+    title: 'Secretaria Geral',
+    subtitle: '',
     color: '#e74c3c',
     coords: {
       latitude: -23.530148,
@@ -122,7 +122,7 @@ export default interestPoints = {
   }],
   // ---------------- departamento geral ----------------
   dpt_geral: [{
-    title: 'geral',
+    title: 'Departamento Geral',
     subtitle: '',
     color: '#e74c3c',
     coords: {
@@ -134,7 +134,7 @@ export default interestPoints = {
   }],
   // --------------- outros departamentos ---------------
   edificio: [{
-    title: 'edificio',
+    title: 'Departamento de Edificios',
     subtitle: '',
     color: '#e74c3c',
     coords: {
@@ -145,7 +145,7 @@ export default interestPoints = {
     },
   }],
   eletronica: [{ // arrumar
-    title: 'eletronica',
+    title: 'Departamento de Eletronica',
     subtitle: '',
     color: '#e74c3c',
     coords: {
@@ -156,7 +156,7 @@ export default interestPoints = {
     },
   }],
   hidraulica: [{ // arrumar
-    title: 'hidraulica',
+    title: 'Departamento de Hidraulica',
     subtitle: '',
     color: '#e74c3c',
     coords: {
@@ -167,7 +167,7 @@ export default interestPoints = {
     },
   }],
   materiais: [{ // arrumar
-    title: 'materiais',
+    title: 'Departamento de Materiais',
     subtitle: '',
     color: '#e74c3c',
     coords: {
@@ -178,7 +178,7 @@ export default interestPoints = {
     },
   }],
   mecanica: [{
-    title: 'mecanica',
+    title: 'Departamento de Mecanica',
     subtitle: '',
     color: '#e74c3c',
     coords: {
@@ -189,7 +189,7 @@ export default interestPoints = {
     },
   }],
   processos: [{ // arrumar
-    title: 'processos',
+    title: 'Departamento de Processos',
     subtitle: '',
     color: '#e74c3c',
     coords: {
@@ -200,7 +200,7 @@ export default interestPoints = {
     },
   }],
   projetos: [{ // arrumar
-    title: 'projetos',
+    title: 'Departamento de Projetos',
     subtitle: '',
     color: '#e74c3c',
     coords: {
@@ -211,7 +211,7 @@ export default interestPoints = {
     },
   }],
   secretariado: [{ // arrumar
-    title: 'secretariado',
+    title: 'Departamento de Secretariado',
     subtitle: '',
     color: '#e74c3c',
     coords: {
@@ -222,7 +222,7 @@ export default interestPoints = {
     },
   }],
   soldagem: [{ // arrumar
-    title: 'soldagem',
+    title: 'Departamento de Soldagem',
     subtitle: '',
     color: '#e74c3c',
     coords: {
@@ -233,7 +233,7 @@ export default interestPoints = {
     },
   }],
   tecnologia: [{
-    title: 'tecnologia',
+    title: 'Departamento de Tecnologia',
     subtitle: '',
     color: '#e74c3c',
     coords: {
@@ -244,7 +244,7 @@ export default interestPoints = {
     },
   }],
   turismo: [{
-    title: 'turismo',
+    title: 'Departamento de Turismo',
     subtitle: '',
     color: '#e74c3c',
     coords: {

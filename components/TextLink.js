@@ -13,10 +13,10 @@ class TextLink extends React.Component {
 
 const styles = {
   wrapperStyle: {
-    padding: 5
+    paddingTop: 5
   },
   textStyle: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#00F'
   }
 }
