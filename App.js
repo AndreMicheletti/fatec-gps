@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-   BackHandler, Modal, Text, Button, View, StyleSheet
+   BackHandler, Modal, Text, Button, View, StyleSheet, Platform
  } from 'react-native';
+ import { Constants, Location, Permissions } from 'expo';
 
 import MapView from 'react-native-maps';
 import ActionButton from 'react-native-action-button'; // https://github.com/mastermoo/react-native-action-button
@@ -21,9 +22,35 @@ export default class App extends React.Component<{}> {
 
   // Modal
   state = {
-    modalVisible: true,
-    showMarkers: 'mainMarkers'
+    modalVisible: false,
+    showMarkers: 'mainMarkers',
+    location: null
   }
+
+  // GEOLOCATION
+  componentWillMount() {
+      if (Platform.OS === 'android' && !Constants.isDevice) {
+        this.setState({
+          errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+        });
+      } else {
+        setInterval(() => {
+          this._getLocationAsync();
+        }, 1000)
+      }
+    }
+
+  _getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      this.setState({
+        errorMessage: 'Permission to access location was denied',
+      });
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    this.setState({ location });
+  };
 
   componentDidMount() {
     BackHandler.addEventListener('resetMarkersEvent', this.onBackPressed.bind(this));
@@ -63,10 +90,31 @@ export default class App extends React.Component<{}> {
     });
   }
 
+  renderPositionMarker() {
+    if (this.state.location) {
+      let coords = {
+        latitude: this.state.location.coords.latitude,
+        longitude: this.state.location.coords.longitude,
+        latitudeDelta: 0.002,
+        longitudeDelta: 0.002,
+      }
+      // console.log(this.state.location)
+      return (
+        <MapView.Marker
+          key="userLocation"
+          coordinate={coords}
+          title="Você está aqui!"
+          pinColor="#000"
+        />
+      );
+    }
+  }
+
   render() {
     return (
       <View style={{flex: 1}}>
         <MapView
+          provider="google"
           style={styles.mapStyle}
           initialRegion={fatecRegion}
           region={fatecRegion}
@@ -80,6 +128,7 @@ export default class App extends React.Component<{}> {
           cacheEnabled>
             {/* Render Markers */}
             {this.renderMarkers()}
+            {this.renderPositionMarker()}
         </MapView>
 
         <Modal
@@ -94,12 +143,13 @@ export default class App extends React.Component<{}> {
           />
         </Modal>
 
+
         <ActionButton buttonColor="#e74c3c">
           <ActionButton.Item buttonColor="#03406A" title="Legenda" onPress={() => this.setModalVisible(true) }>
             <Text style={styles.menuItem}>{"?"}</Text>
           </ActionButton.Item>
           <ActionButton.Item buttonColor="#1D7373" title="Mostrar Todos" onPress={() => this.showMaker('mainMarkers') }>
-            <Text style={styles.menuItem}>{"!"}</Text>
+            <Text style={styles.menuItem}>{"#"}</Text>
           </ActionButton.Item>
         </ActionButton>
       </View>

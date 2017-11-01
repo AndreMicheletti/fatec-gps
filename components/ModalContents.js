@@ -11,7 +11,7 @@ class ModalContents extends React.Component {
     return (
       <Container>
         <ContainerSection>
-          <Text style={headerTextStyle}>Legenda</Text>
+          <Text style={headerTextStyle}>Salas Especiais</Text>
         </ContainerSection>
 
         <ScrollView style={scrollStyle}>
@@ -22,6 +22,14 @@ class ModalContents extends React.Component {
           <TextLink text='Departamento de Estágio' onPress={() => this.props.showMaker('estagio') } />
           <TextLink text='Departamento de Mecanica' onPress={() => this.props.showMaker('mecanica') } />
           <TextLink text='Departamento de Edificios' onPress={() => this.props.showMaker('edificio') } />
+        </ScrollView>
+
+        <ContainerSection>
+          <Text style={headerTextStyle}>Legenda</Text>
+        </ContainerSection>
+        <ScrollView style={scrollStyle}>
+          <Text>Sala 51A > Prédio A - Andar 5 - Sala 1</Text>
+          <Text>Sala 21S > Prédio Santiago - Andar 2 - Sala 1</Text>
         </ScrollView>
 
         <ContainerSection>
@@ -40,6 +48,7 @@ const styles = StyleSheet.create({
     paddingRight: 5
   },
   headerTextStyle:{
+    marginTop: 10,
     alignItems: 'center',
     justifyContent: 'center',
     color: 'black',
