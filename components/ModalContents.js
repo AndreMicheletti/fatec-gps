@@ -33,7 +33,7 @@ class ModalContents extends React.Component {
         </ScrollView>
 
         <ContainerSection>
-          <Button onPress={this.props.onButtonPress} text="Fechar" color="#e74c3c"/>
+          <Button onPress={this.props.onButtonPress} text="Fechar" color="#FFECE9" backgroundColor="#A61700"/>
         </ContainerSection>
       </Container>
     );

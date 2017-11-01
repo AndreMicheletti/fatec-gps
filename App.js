@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-   BackHandler, Modal, Text, Button, View, StyleSheet, Platform
+   BackHandler, Modal, Text, Button, View, StyleSheet, Platform, Image
  } from 'react-native';
  import { Constants, Location, Permissions } from 'expo';
 
@@ -84,8 +84,7 @@ export default class App extends React.Component<{}> {
           coordinate={point.coords}
           title={point.title}
           subtitle={point.subtitle}
-          pinColor={point.color}
-        />
+          pinColor={point.color} />
       );
     });
   }
@@ -104,8 +103,11 @@ export default class App extends React.Component<{}> {
           key="userLocation"
           coordinate={coords}
           title="Você está aqui!"
-          pinColor="#000"
-        />
+          pinColor="#000">
+          <Image
+            style={{width:16, height: 16}}
+            source={require('./assets/sphere.png')} />
+        </MapView.Marker>
       );
     }
   }
