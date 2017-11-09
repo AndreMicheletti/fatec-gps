@@ -24,6 +24,6 @@ aplicativo de Mapa mostrando os pontos de interesse principais, como Prédios, A
 
 4. Aguarde até aparecer no terminal um **QR CODE**. Abra o Expo no seu dispositivo móvel e escaneie o **QR CODE**
 
-## LICENÇA
+## License
 
-MIT
+Distributed under the terms of the [MIT](http://opensource.org/licenses/MIT) license, "fatec-gps" is free and open source software
