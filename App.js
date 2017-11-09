@@ -41,15 +41,18 @@ export default class App extends React.Component<{}> {
     }
 
   _getLocationAsync = async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') {
-      this.setState({
-        errorMessage: 'Permission to access location was denied',
-      });
-    }
+    try {
+      let { status } = await Permissions.askAsync(Permissions.LOCATION);
+      if (status !== 'granted') {
+        console.log("location not permitted");
+        return;
+      }
 
-    let location = await Location.getCurrentPositionAsync({});
-    this.setState({ location });
+      let location = await Location.getCurrentPositionAsync({});
+      this.setState({ location });
+    } catch (error) {
+      console.log("couldn't get position")
+    }
   };
 
   componentDidMount() {
