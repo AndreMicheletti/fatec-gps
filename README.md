@@ -15,10 +15,10 @@ aplicativo de Mapa mostrando os pontos de interesse principais, como Prédios, A
 1. Clone o repositório usnado `git clone https://github.com/AndreMicheletti/fatec-gps.git`
 
 2. Instale as dependencias:
- - [] [node >6](https://nodejs.org) & [npm](https://www.npmjs.com)
- - [] [watchman](https://facebook.github.io/watchman/docs/install.html)
- - [] (no seu celular) [Expo App](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=pt_BR)
- - [] E usando o npm, instalar as dependencias do projeto. Para fazer isso execute: `npm install` no diretório do projeto
+ - [node >6](https://nodejs.org) & [npm](https://www.npmjs.com)
+ - [watchman](https://facebook.github.io/watchman/docs/install.html)
+ - (no seu celular) [Expo App](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=pt_BR)
+ - E usando o npm, instalar as dependencias do projeto. Para fazer isso execute: `npm install` no diretório do projeto
 
 3. Na pasta do projeto, execute `npm start`
 
