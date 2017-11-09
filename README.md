@@ -1,6 +1,7 @@
 # Fatec GPS
 
-![FatecGPS App](https://i.imgur.com/oHa7wm8.jpg)
+![FatecGPS App](https://raw.githubusercontent.com/AndreMicheletti/fatec-gps/master/assets/screen.jpg)
+![FatecGPS App2](https://raw.githubusercontent.com/AndreMicheletti/fatec-gps/master/assets/screen-a.jpg)
 
 Aplicativo Mobile feito com [react-native](https://facebook.github.io/react-native/) como TCC para a FatecSP
 
