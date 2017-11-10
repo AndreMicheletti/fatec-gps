@@ -82,12 +82,19 @@ export default class App extends React.Component<{}> {
   renderMarkers() {
     return interestPoints[this.state.showMarkers].map((point) => {
       return (
-        <MapView.Marker
-          key={point.title}
-          coordinate={point.coords}
-          title={point.title}
-          subtitle={point.subtitle}
-          pinColor={point.color} />
+        <View>
+          <MapView.Marker
+            coordinate={point.coords}
+            title={point.title}
+            subtitle={point.subtitle}
+            pinColor={point.color}
+          />
+          <MapView.Polyline
+            coordinates={[point.coords, fatecRegion]}
+            strokeWidth={3}
+            strokeColor="#F00"
+          />
+        </View>
       );
     });
   }
