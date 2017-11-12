@@ -1,18 +1,24 @@
 import React from 'react';
+import { Constants, Location, Permissions } from 'expo';
 import {
-   BackHandler, Modal, Text, Button, View, StyleSheet, Platform, Image
+   BackHandler,
+   Modal,
+   Text,
+   Button,
+   View,
+   StyleSheet,
+   Platform,
+   Image
  } from 'react-native';
- import { Constants, Location, Permissions } from 'expo';
 
 import MapView from 'react-native-maps';
-import ActionButton from 'react-native-action-button'; // https://github.com/mastermoo/react-native-action-button
+import ActionButton from 'react-native-action-button';
 
 import ModalContents from './components/ModalContents'
-import TopMessage from './components/TopMessage'
 
+import mapSettings from './data/mapSettings.js'
 import markersList from './data/markers.json'
 import routesList from './data/routes.json'
-
 
 const fatecRegion = {
   latitude: -23.529202,
@@ -32,6 +38,7 @@ export default class App extends React.Component<{}> {
 
   defaultPinColor = "#E74C3C"
   selectedPinColor = "#03406A"
+  routeStrokeColor = "#009D91"
 
   componentWillMount() {
     BackHandler.addEventListener('resetSelection', this.onBackPressed.bind(this));
@@ -64,32 +71,38 @@ export default class App extends React.Component<{}> {
     return foundRoute;
   }
 
-  onMarkerPressed(pointId) {
-    if (this.state.route) {
-      this.setState({ route: null, selected: pointId });
-    } else {
-      if (this.state.selected !== null) {
-        let route = this.findRouteFor(this.state.selected, pointId);
-        if (route !== null) {
-          this.setState({ route: route, selected: null });
-        } else {
-          console.log("route not found for " + this.state.selected + " " + pointId)
-        }
-      } else {
-        this.setState({ selected: pointId });
+  selectLocation(pointOne) {
+    this.setState({ route: null, selected: pointOne });
+    const pointTwo = this.state.selected;
+
+    if (pointTwo !== null) {
+      // IF SAME SELECTED
+      if (pointTwo == pointOne) {
+        this.setState({ route: null, selected: null, modalVisible: false });
+        return;
       }
+      // LOOK FOR ROUTE
+      let route = this.findRouteFor(pointTwo, pointOne);
+      if (route !== null) {
+        this.setState({ route: [route, pointOne, pointTwo], selected: null, modalVisible: false });
+      } else {
+        console.log("route not found for " + pointTwo + " " + pointOne)
+      }
+    } else {
+      // FIRST TIME SELECTING
+      this.setState({ selected: pointOne });
     }
   }
 
   renderRoute() {
     if (this.state.route !== null) {
-      let routeObject = routesList[this.state.route];
+      let routeObject = routesList[this.state.route[0]];
       let points = routeObject.points.map((point) => markersList[point-1].coords);
       return (
         <MapView.Polyline
           coordinates={points}
-          strokeWidth={2}
-          strokeColor={this.selectedPinColor}
+          strokeColor={this.routeStrokeColor}
+          strokeWidth={3}
         />
       );
     }
@@ -98,43 +111,40 @@ export default class App extends React.Component<{}> {
   renderMarkers() {
     return markersList.map((point) => {
       if (point.visible) {
+        let pinColor = this.defaultPinColor;
+        if (this.state.route !== null) {
+          if (this.state.route[1] === point.id || this.state.route[2] === point.id) {
+            pinColor = this.selectedPinColor;
+          }
+        }
         return (
           <MapView.Marker
             key={point.id}
-            onPress={(e) => this.onMarkerPressed(point.id)}
             coordinate={point.coords}
             title={point.title}
-            pinColor={(this.state.selected == point.id ? this.selectedPinColor : this.defaultPinColor)}
+            pinColor={pinColor}
           />
         );
       }
     });
   }
 
-
   render() {
     const {mapStyle, topViewStyle, menuItem} = styles;
+
     return (
       <View style={{ flex: 1 }}>
+
         <MapView
-          provider="google"
+          {...mapSettings}
           style={mapStyle}
           initialRegion={fatecRegion}
-          region={fatecRegion}
-          showsPointsOfInterest={false}
-          scrollEnabled={false}
-          rotateEnabled={false}
-          zoomEnabled={false}
-          pitchEnabled={false}
-          minZoomLevel={15}
-          moveOnMarkerPress={false}
-          cacheEnabled>
+          region={fatecRegion}>
+
             {/* Render Markers */}
             {this.renderMarkers()}
             {this.renderRoute()}
         </MapView>
-
-        <TopMessage text="Onde você está?" />
 
         <Modal
           animationType="slide"
@@ -143,19 +153,18 @@ export default class App extends React.Component<{}> {
           onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}>
 
           <ModalContents
+            headerText={this.state.selected === null ? "Escolha o seu local atual " : "Escolha para onde quer ir"}
             onButtonPress={() => this.setModalVisible(!this.state.modalVisible)}
-            showMaker={() => null}
+            onLinkPress={this.selectLocation.bind(this)}
+            selected={this.state.selected}
           />
         </Modal>
 
 
         <ActionButton buttonColor="#e74c3c">
-          <ActionButton.Item buttonColor="#03406A" title="Legenda" onPress={() => this.setModalVisible(true) }>
+          <ActionButton.Item buttonColor="#03406A" title="Encontrar" onPress={() => this.setModalVisible(true) }>
             <Text style={menuItem}>{"?"}</Text>
           </ActionButton.Item>
-          {/* <ActionButton.Item buttonColor="#1D7373" title="Mostrar Todos" onPress={() => this.showMaker('mainMarkers') }>
-            <Text style={menuItem}>{"#"}</Text>
-          </ActionButton.Item> */}
         </ActionButton>
       </View>
     );

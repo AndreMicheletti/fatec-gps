@@ -12,11 +12,6 @@
         "ACCESS_FINE_LOCATION"
       ]
     },
-    "version": "0.1.0",
-    "isDetached": true,
-    "detach": {
-      "scheme": "exp63cf576526e8442e86652fe33d95e69a",
-      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.0.0-sdk22.0.0-7432f75c-05a1-4826-a456-02875e338222.tar.gz"
-    }
+    "version": "0.1.0"
   }
 }

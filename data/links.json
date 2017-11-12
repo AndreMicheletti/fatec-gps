@@ -1,0 +1,58 @@
+{
+  "mainSection": [
+    {
+      "text":"Entrada",
+      "target": 1
+    },
+    {
+      "text":"Bloco A - Prédio A/B",
+      "target": 3
+    },
+    {
+      "text":"Bloco B - Prédio A/B",
+      "target": 2
+    },
+    {
+      "text":"Edificio Santhiago",
+      "target": 4
+    },
+    {
+      "text":"Centro Acadêmico",
+      "target": 5
+    },
+    {
+      "text":"Etesp",
+      "target": 6
+    }
+  ],
+  "subSection": [
+    {
+      "text":"Biblioteca",
+      "target": 4
+    },
+    {
+      "text":"Secretaria Geral",
+      "target": 4
+    },
+    {
+      "text":"Laboratorios de Informática",
+      "target": 4
+    },
+    {
+      "text":"Departamento Geral",
+      "target": 4
+    },
+    {
+      "text":"Departamento de Estágio",
+      "target": 4
+    },
+    {
+      "text":"Departamento de Mecanica",
+      "target": 4
+    },
+    {
+      "text":"Departamento de Edificios",
+      "target": 4
+    }
+  ]
+}

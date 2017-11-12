@@ -1,14 +1,30 @@
 import React from 'react'
-import { Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 
-class TextLink extends React.Component {
+export default class TextLink extends React.Component {
   render() {
-    return(
-      <TouchableOpacity style={styles.wrapperStyle} onPress={this.props.onPress}>
-        <Text style={styles.textStyle}>{this.props.text}</Text>
-      </TouchableOpacity>
-    );
+
+    const { text, visible, onPress } = this.props;
+    const { wrapperStyle, textStyle } = styles;
+    
+    if (visible === true) {
+      return (
+        <TouchableOpacity style={wrapperStyle} onPress={onPress}>
+          <Text style={textStyle}>
+            {text}
+          </Text>
+        </TouchableOpacity>
+      );
+    } else {
+      return <View />;
+    }
   }
+}
+
+TextLink.defaultProps = {
+  visible: true,
+  text: "Header",
+  onPress: () => null
 }
 
 const styles = {
@@ -20,5 +36,3 @@ const styles = {
     color: '#00F'
   }
 }
-
-export default TextLink;
