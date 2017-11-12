@@ -1,5 +1,22 @@
 {
   "expo": {
-    "sdkVersion": "21.0.0"
+    "name": "Fatec GPS",
+    "slug": "fatec-gps",
+    "sdkVersion": "21.0.0",
+    "privacy": "public",
+    "android": {
+      "package": "edu.fatecsp.fatecgps",
+      "versionCode": 1,
+      "icon": "./assets/icon.png",
+      "permissions": [
+        "ACCESS_FINE_LOCATION"
+      ]
+    },
+    "version": "0.1.0",
+    "isDetached": true,
+    "detach": {
+      "scheme": "exp63cf576526e8442e86652fe33d95e69a",
+      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.0.0-sdk22.0.0-7432f75c-05a1-4826-a456-02875e338222.tar.gz"
+    }
   }
 }

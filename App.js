@@ -7,8 +7,11 @@ import {
 import MapView from 'react-native-maps';
 import ActionButton from 'react-native-action-button'; // https://github.com/mastermoo/react-native-action-button
 
-import ModalContents  from './components/ModalContents'
-import interestPoints from './data/markers'
+import ModalContents from './components/ModalContents'
+import TopMessage from './components/TopMessage'
+
+import markersList from './data/markers.json'
+import routesList from './data/routes.json'
 
 
 const fatecRegion = {
@@ -23,48 +26,24 @@ export default class App extends React.Component<{}> {
   // Modal
   state = {
     modalVisible: false,
-    showMarkers: 'mainMarkers',
-    location: null
+    selected: null,
+    route: null
   }
 
-  // GEOLOCATION
+  defaultPinColor = "#E74C3C"
+  selectedPinColor = "#03406A"
+
   componentWillMount() {
-      if (Platform.OS === 'android' && !Constants.isDevice) {
-        this.setState({
-          errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
-        });
-      } else {
-        setInterval(() => {
-          this._getLocationAsync();
-        }, 1000)
-      }
-    }
-
-  _getLocationAsync = async () => {
-    try {
-      let { status } = await Permissions.askAsync(Permissions.LOCATION);
-      if (status !== 'granted') {
-        console.log("location not permitted");
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      this.setState({ location });
-    } catch (error) {
-      console.log("couldn't get position")
-    }
-  };
-
-  componentDidMount() {
-    BackHandler.addEventListener('resetMarkersEvent', this.onBackPressed.bind(this));
+    BackHandler.addEventListener('resetSelection', this.onBackPressed.bind(this));
   }
 
   onBackPressed() {
     if (this) {
-      if (this.state.showMarkers == 'mainMarkers') {
-        return false;
-      } else {
-        this.showMaker('mainMarkers')
+      if (this.state.route) {
+        this.setState({ route: null });
+        return true;
+      } else if (this.state.selected) {
+        this.setState({ selected: null });
         return true;
       }
     }
@@ -75,59 +54,71 @@ export default class App extends React.Component<{}> {
     this.setState({ modalVisible: visible });
   }
 
-  showMaker(makerName) {
-    this.setState({ showMarkers: makerName, modalVisible: false })
-  }
-
-  renderMarkers() {
-    return interestPoints[this.state.showMarkers].map((point) => {
-      return (
-        <View>
-          <MapView.Marker
-            coordinate={point.coords}
-            title={point.title}
-            subtitle={point.subtitle}
-            pinColor={point.color}
-          />
-          <MapView.Polyline
-            coordinates={[point.coords, fatecRegion]}
-            strokeWidth={3}
-            strokeColor="#F00"
-          />
-        </View>
-      );
-    });
-  }
-
-  renderPositionMarker() {
-    if (this.state.location) {
-      let coords = {
-        latitude: this.state.location.coords.latitude,
-        longitude: this.state.location.coords.longitude,
-        latitudeDelta: 0.002,
-        longitudeDelta: 0.002,
+  findRouteFor(pointOne, pointTwo) {
+    let foundRoute = null;
+    routesList.forEach( (item, index) => {
+      if (item["routeFrom"].includes(parseInt(pointOne)) && item.routeFrom.includes(parseInt(pointTwo))) {
+        foundRoute = parseInt(item["id"]) - 1;
       }
-      // console.log(this.state.location)
+    });
+    return foundRoute;
+  }
+
+  onMarkerPressed(pointId) {
+    if (this.state.route) {
+      this.setState({ route: null, selected: pointId });
+    } else {
+      if (this.state.selected !== null) {
+        let route = this.findRouteFor(this.state.selected, pointId);
+        if (route !== null) {
+          this.setState({ route: route, selected: null });
+        } else {
+          console.log("route not found for " + this.state.selected + " " + pointId)
+        }
+      } else {
+        this.setState({ selected: pointId });
+      }
+    }
+  }
+
+  renderRoute() {
+    if (this.state.route !== null) {
+      let routeObject = routesList[this.state.route];
+      let points = routeObject.points.map((point) => markersList[point-1].coords);
       return (
-        <MapView.Marker
-          key="userLocation"
-          coordinate={coords}
-          title="Você está aqui!"
-          pinColor="#000">
-          <Image
-            style={{width:16, height: 16}}
-            source={require('./assets/sphere.png')} />
-        </MapView.Marker>
+        <MapView.Polyline
+          coordinates={points}
+          strokeWidth={2}
+          strokeColor={this.selectedPinColor}
+        />
       );
     }
   }
 
+  renderMarkers() {
+    return markersList.map((point) => {
+      if (point.visible) {
+        return (
+          <MapView.Marker
+            key={point.id}
+            onPress={(e) => this.onMarkerPressed(point.id)}
+            coordinate={point.coords}
+            title={point.title}
+            pinColor={(this.state.selected == point.id ? this.selectedPinColor : this.defaultPinColor)}
+          />
+        );
+      }
+    });
+  }
+
+
   render() {
+    const {mapStyle, topViewStyle, menuItem} = styles;
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <MapView
           provider="google"
-          style={styles.mapStyle}
+          style={mapStyle}
           initialRegion={fatecRegion}
           region={fatecRegion}
           showsPointsOfInterest={false}
@@ -140,8 +131,10 @@ export default class App extends React.Component<{}> {
           cacheEnabled>
             {/* Render Markers */}
             {this.renderMarkers()}
-            {this.renderPositionMarker()}
+            {this.renderRoute()}
         </MapView>
+
+        <TopMessage text="Onde você está?" />
 
         <Modal
           animationType="slide"
@@ -151,18 +144,18 @@ export default class App extends React.Component<{}> {
 
           <ModalContents
             onButtonPress={() => this.setModalVisible(!this.state.modalVisible)}
-            showMaker={this.showMaker.bind(this)}
+            showMaker={() => null}
           />
         </Modal>
 
 
         <ActionButton buttonColor="#e74c3c">
           <ActionButton.Item buttonColor="#03406A" title="Legenda" onPress={() => this.setModalVisible(true) }>
-            <Text style={styles.menuItem}>{"?"}</Text>
+            <Text style={menuItem}>{"?"}</Text>
           </ActionButton.Item>
-          <ActionButton.Item buttonColor="#1D7373" title="Mostrar Todos" onPress={() => this.showMaker('mainMarkers') }>
-            <Text style={styles.menuItem}>{"#"}</Text>
-          </ActionButton.Item>
+          {/* <ActionButton.Item buttonColor="#1D7373" title="Mostrar Todos" onPress={() => this.showMaker('mainMarkers') }>
+            <Text style={menuItem}>{"#"}</Text>
+          </ActionButton.Item> */}
         </ActionButton>
       </View>
     );
@@ -175,6 +168,7 @@ const styles = StyleSheet.create({
   },
   modalContainer:{
     flex: 1,
+    height: 500,
     flexDirection: 'column',
   },
   modalText:{
@@ -201,4 +195,4 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: 'white'
   }
-})
+});

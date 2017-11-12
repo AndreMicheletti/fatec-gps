@@ -1,12 +1,12 @@
 import React from 'react'
-import { Text, TouchableHighlight } from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 
 class TextLink extends React.Component {
   render() {
     return(
-      <TouchableHighlight style={styles.wrapperStyle} onPress={this.props.onPress}>
+      <TouchableOpacity style={styles.wrapperStyle} onPress={this.props.onPress}>
         <Text style={styles.textStyle}>{this.props.text}</Text>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   }
 }

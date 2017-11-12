@@ -1,0 +1,169 @@
+[
+  {
+    "id": 1,
+    "visible": true,
+    "title": "Entrada",
+    "coords":  {
+      "latitude": -23.529734,
+      "longitude": -46.632096,
+      "latitudeDelta": 0.002,
+      "longitudeDelta": 0.002,
+    }
+  },
+
+  {
+    "id": 2,
+    "visible": true,
+    "title": "Prédio A/B - Bloco B",
+    "coords":  {
+      "latitude": -23.529315,
+      "longitude": -46.632438,
+      "latitudeDelta": 0.002,
+      "longitudeDelta": 0.002,
+    }
+  },
+
+  {
+    "id": 3,
+    "visible": true,
+    "title": "Prédio A/B - Bloco A",
+    "coords":  {
+      "latitude": -23.529076,
+      "longitude": -46.632572,
+      "latitudeDelta": 0.002,
+      "longitudeDelta": 0.002,
+    }
+  },
+
+  {
+    "id": 4,
+    "visible": true,
+    "title": "Edificio Santhiago",
+    "coords":  {
+      "latitude": -23.529987,
+      "longitude": -46.632485,
+      "latitudeDelta": 0.002,
+      "longitudeDelta": 0.002,
+    }
+  },
+
+  {
+    "id": 5,
+    "visible": true,
+    "title": "Centro Acadêmico",
+    "coords":  {
+      "latitude": -23.530069,
+      "longitude": -46.632816,
+      "latitudeDelta": 0.002,
+      "longitudeDelta": 0.002,
+    }
+  },
+
+  {
+    "id": 6,
+    "visible": true,
+    "title": "Etesp",
+    "coords":  {
+      "latitude": -23.528951,
+      "longitude": -46.633147,
+      "latitudeDelta": 0.002,
+      "longitudeDelta": 0.002,
+    }
+  },
+
+  {
+    "id": 7,
+    "visible": false,
+    "title": "Conexao 1",
+    "coords":  {
+      "latitude": -23.529626,
+      "longitude": -46.632590,
+      "latitudeDelta": 0.002,
+      "longitudeDelta": 0.002,
+    }
+  },
+
+  {
+    "id": 8,
+    "visible": false,
+    "title": "Conexao 2",
+    "coords":  {
+      "latitude": -23.529537,
+      "longitude": -46.632960,
+      "latitudeDelta": 0.002,
+      "longitudeDelta": 0.002,
+    }
+  },
+
+  {
+    "id": 9,
+    "visible": false,
+    "title": "Conexao Sant",
+    "coords":  {
+      "latitude": -23.529953,
+      "longitude": -46.632686,
+      "latitudeDelta": 0.002,
+      "longitudeDelta": 0.002,
+    }
+  },
+
+  {
+    "id": 10,
+    "visible": false,
+    "title": "Conexao CA",
+    "coords":  {
+      "latitude": -23.530088,
+      "longitude": -46.632740,
+      "latitudeDelta": 0.002,
+      "longitudeDelta": 0.002,
+    }
+  },
+
+  {
+    "id": 11,
+    "visible": false,
+    "title": "Conexao B",
+    "coords":  {
+      "latitude": -23.529235,
+      "longitude": -46.632826,
+      "latitudeDelta": 0.002,
+      "longitudeDelta": 0.002,
+    }
+  },
+
+  {
+    "id": 12,
+    "visible": false,
+    "title": "Conexao A",
+    "coords":  {
+      "latitude": -23.529046,
+      "longitude": -46.632752,
+      "latitudeDelta": 0.002,
+      "longitudeDelta": 0.002,
+    }
+  },
+
+  {
+    "id": 13,
+    "visible": false,
+    "title": "Conexao E",
+    "coords":  {
+      "latitude": -23.529265,
+      "longitude": -46.633233,
+      "latitudeDelta": 0.002,
+      "longitudeDelta": 0.002,
+    }
+  },
+
+  {
+    "id": 14,
+    "visible": false,
+    "title": "Conexao AB",
+    "coords":  {
+      "latitude": -23.529266,
+      "longitude": -46.632626,
+      "latitudeDelta": 0.002,
+      "longitudeDelta": 0.002,
+    }
+  },
+]

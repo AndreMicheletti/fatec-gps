@@ -1,0 +1,13 @@
+{
+  name: "Fatec GPS",
+  icon: "./assets/icon.png",
+  version: "1.0.0",
+  slug: "fatec-gps",
+  sdkVersion: "21.0.0",
+  ios: {
+    bundleIdentifier: "edu.fatecsp.fatecgps",
+  },
+  android: {
+    package: "edu.fatecsp.fatecgps",
+  }
+}
