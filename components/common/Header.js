@@ -19,7 +19,7 @@ class Header extends React.Component {
         backgroundColor: this.props.color,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop: 10,
+        paddingTop: 22,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.2,

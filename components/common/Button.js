@@ -40,10 +40,10 @@ class Button extends React.Component {
   }
 }
 
-export { Button };
-
 Button.defaultProps = {
   color: '#007aff',
   backgroundColor: '#f8f8f8',
   onPress: () => console.log('Button pressed!')
 };
+
+export { Button };
