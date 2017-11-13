@@ -7,13 +7,10 @@ var { height, width } = Dimensions.get('window');
 
 export default class NavigationBar extends React.Component {
 
-  state = {
-    fromInputFocus: true,
-  }
-
   nextFocus() {
-    console.log('yea!');
-    this.setState({ fromInputFocus: false });
+    console.log('yea')
+    // this.refs.destinationInput.focus();
+    console.log(this.refs.destinationInput);
   }
 
   render() {
@@ -24,12 +21,12 @@ export default class NavigationBar extends React.Component {
           <InputText
             placeholder="Onde você está?"
             extraInputStyle={inputStyle}
-            focus={this.state.fromInputFocus}
+            onSubmitEditing={this.nextFocus.bind(this)}
           />
           <InputText
+            ref="destinationInput"
             placeholder="Para onde quer ir?"
             extraInputStyle={inputStyle}
-            focus={!this.state.fromInputFocus}
           />
         </View>
       </View>
@@ -51,6 +48,6 @@ const styles = {
     width: width,
   },
   inputStyle: {
-    backgroundColor: "#EAEAEA",
+    backgroundColor: "#F4F4F4",
   }
 };
