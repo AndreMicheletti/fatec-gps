@@ -15,6 +15,7 @@ import MapView from 'react-native-maps';
 import ActionButton from 'react-native-action-button';
 
 import ModalContents from './components/ModalContents'
+import NavigationBar from './components/NavigationBar'
 
 import mapSettings from './data/mapSettings.js'
 import markersList from './data/markers.json'
@@ -145,6 +146,8 @@ export default class App extends React.Component<{}> {
             {this.renderMarkers()}
             {this.renderRoute()}
         </MapView>
+
+        <NavigationBar />
 
         <Modal
           animationType="slide"
