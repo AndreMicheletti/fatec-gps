@@ -5,34 +5,36 @@ class Button extends React.Component {
 
   render() {
     const { buttonStyle, textStyle } = this.getStyles();
+    const { children, onPress } = this.props;
 
     return (
-      <TouchableOpacity
-        style={buttonStyle}
-        onPress={this.props.onPress}
-      >
-        <Text style={textStyle}>{this.props.text}</Text>
+      <TouchableOpacity style={buttonStyle} onPress={onPress}>
+        <Text style={textStyle}>
+          {children}
+        </Text>
       </TouchableOpacity>
     );
   }
 
   getStyles() {
+    const { backgroundColor, color, padding } = this.props;
+
     return {
       textStyle: {
         alignSelf: 'center',
-        color: this.props.color,
+        color: color,
         fontSize: 15,
         fontWeight: '600',
-        paddingTop: 10,
-        paddingBottom: 10
+        paddingTop: padding,
+        paddingBottom: padding
       },
       buttonStyle: {
         flex: 1,
         alignSelf: 'stretch',
-        backgroundColor: this.props.backgroundColor,
+        backgroundColor: backgroundColor,
         borderRadius: 5,
         borderWidth: 1,
-        borderColor: this.props.color,
+        borderColor: color,
         marginLeft: 5,
         marginRight: 5
       }
@@ -43,6 +45,7 @@ class Button extends React.Component {
 Button.defaultProps = {
   color: '#007aff',
   backgroundColor: '#f8f8f8',
+  padding: 10,
   onPress: () => console.log('Button pressed!')
 };
 

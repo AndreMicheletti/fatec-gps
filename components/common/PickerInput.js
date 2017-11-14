@@ -3,9 +3,8 @@ import { View, Text, Picker } from 'react-native';
 
 class PickerInput extends React.Component {
 
-  state = { selectedValue: 0 }
-
   getStyles() {
+    const { fontSize, extraInputStyle } = this.props;
     return {
       containerStyle: {
         height: 40,
@@ -14,7 +13,7 @@ class PickerInput extends React.Component {
         alignItems: 'center'
       },
       textStyle: {
-        fontSize: this.props.fontSize,
+        fontSize: fontSize,
         paddingLeft: 5,
         flex: 1
       },
@@ -23,10 +22,10 @@ class PickerInput extends React.Component {
         paddingRight: 5,
         paddingLeft: 10,
         flex: 2,
-        ...this.props.extraInputStyle
+        ...extraInputStyle
       },
       inputItemStyle: {
-        fontSize: this.props.fontSize,
+        fontSize: fontSize,
       }
     };
   }
@@ -43,11 +42,12 @@ class PickerInput extends React.Component {
     }
   }
 
-  renderItems() {
+  renderItems(style) {
     let { itemList } = this.props;
     return itemList.map((item) => {
       return (
         <Picker.Item
+          style={style}
           label={item.label}
           value={item.value}
           key={item.value}
@@ -56,27 +56,14 @@ class PickerInput extends React.Component {
     });
   }
 
-  selfOnValueChange(itemValue, itemIndex) {
-    this.setState({ selectedValue:  itemValue });
-
-    // Callback passed on by props
-    this.props.onValueChange(itemValue, itemIndex);
-  }
-
   render() {
     const { containerStyle, textStyle, inputStyle, inputItemStyle } = this.getStyles();
 
     return (
       <View style={containerStyle}>
         {this.renderLabel()}
-        <Picker
-          style={inputStyle}
-          itemStyle={inputItemStyle}
-          selectedValue={this.state.selectedValue}
-          {...this.props}
-          onValueChange={this.selfOnValueChange.bind(this)}
-        >
-          {this.renderItems()}
+        <Picker style={inputStyle} itemStyle={inputItemStyle} {...this.props}>
+          {this.renderItems(inputItemStyle)}
         </Picker>
       </View>
     );
@@ -94,7 +81,8 @@ PickerInput.defaultProps = {
   itemList: [
     { label: 'First', value: 'first' }, { label: 'Second', value: 'second' }
   ],
-  onValueChange: ((itemValue, itemIndex) => console.log('selected ' + itemValue))
+  onValueChange: ((itemValue, itemIndex) => console.log('selected ' + itemValue)),
+  selectedValue: 0
 };
 
 export { PickerInput };

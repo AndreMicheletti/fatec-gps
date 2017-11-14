@@ -8,6 +8,26 @@ var { height, width } = Dimensions.get('window');
 
 export default class NavigationBar extends React.Component {
 
+  state = {
+    origin: null,
+    destiny: null
+  }
+
+  onValueChange(newState) {
+    this.props.onStateChange(newState);
+    this.setState(newState);
+  }
+
+  getLocationList() {
+    return this.props.locationList.map((location) => {
+      if (location.visible == true) {
+        return { label: location.title, value: location.id};
+      } else {
+        return false;
+      }
+    }).filter(x => !!x);;
+  }
+
   render() {
     const { floatView, boxView, inputStyle } = styles;
     const { origin, destiny } = this.state;
@@ -18,14 +38,16 @@ export default class NavigationBar extends React.Component {
           <PickerInput
             label="Seu local"
             mode='dropdown'
-            itemList={[{ label: 'Onde você está?', value: 'default' }, ...this.getLocationList(destiny)]}
-            onValueChange={(itemValue, itemIndex) => this.setState({ origin: itemValue })}
+            itemList={[{ label: 'Onde você está?', value: 'default' }, ...this.getLocationList()]}
+            onValueChange={(itemValue, itemIndex) => this.onValueChange({ origin: itemValue, destiny: destiny })}
+            selectedValue={origin}
           />
           <PickerInput
             label="Destino"
             mode='dropdown'
-            itemList={[{ label: 'Para onde vai?', value: 'default' }, ...this.getLocationList(origin)]}
-            onValueChange={(itemValue, itemIndex) => this.setState({ destiny: itemValue })}
+            itemList={[{ label: 'Para onde vai?', value: 'default' }, ...this.getLocationList()]}
+            onValueChange={(itemValue, itemIndex) => this.onValueChange({ origin: origin, destiny: itemValue })}
+            selectedValue={destiny}
           />
         </View>
       </View>
@@ -35,7 +57,7 @@ export default class NavigationBar extends React.Component {
 
 NavigationBar.defaultProps = {
   locationList: [],
-  onRouteChange: (() => console.log('route changed!'))
+  onStateChange: ((state) => console.log('state changed!')),
 };
 
 const styles = {

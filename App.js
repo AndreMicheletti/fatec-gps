@@ -30,16 +30,16 @@ const fatecRegion = {
 
 export default class App extends React.Component<{}> {
 
-  // Modal
-  state = {
-    modalVisible: false,
-    selected: null,
-    route: null
-  }
-
   defaultPinColor = "#E74C3C"
   selectedPinColor = "#03406A"
   routeStrokeColor = "#009D91"
+
+  state = {
+    // modalVisible: false,
+    origin: null,
+    destiny: null,
+    route: null
+  }
 
   componentWillMount() {
     BackHandler.addEventListener('resetSelection', this.onBackPressed.bind(this));
@@ -50,54 +50,39 @@ export default class App extends React.Component<{}> {
       if (this.state.route) {
         this.setState({ route: null });
         return true;
-      } else if (this.state.selected) {
-        this.setState({ selected: null });
+      } else if (this.state.origin || this.state.destiny) {
+        this.setState({ origin: null, destiny: null });
         return true;
       }
     }
     return false;
   }
 
-  setModalVisible(visible) {
-    this.setState({ modalVisible: visible });
-  }
+  // setModalVisible(visible) {
+  //   this.setState({ modalVisible: visible });
+  // }
 
   findRouteFor(pointOne, pointTwo) {
+    if (pointOne === pointTwo) {
+      return null;
+    }
     let foundRoute = null;
     routesList.forEach( (item, index) => {
-      if (item["routeFrom"].includes(parseInt(pointOne)) && item.routeFrom.includes(parseInt(pointTwo))) {
+      if (item["routeFrom"].includes(pointOne) && item.routeFrom.includes(pointTwo)) {
         foundRoute = parseInt(item["id"]) - 1;
       }
     });
     return foundRoute;
   }
 
-  selectLocation(pointOne) {
-    this.setState({ route: null, selected: pointOne });
-    const pointTwo = this.state.selected;
-
-    if (pointTwo !== null) {
-      // IF SAME SELECTED
-      if (pointTwo == pointOne) {
-        this.setState({ route: null, selected: null, modalVisible: false });
-        return;
-      }
-      // LOOK FOR ROUTE
-      let route = this.findRouteFor(pointTwo, pointOne);
-      if (route !== null) {
-        this.setState({ route: [route, pointOne, pointTwo], selected: null, modalVisible: false });
-      } else {
-        console.log("route not found for " + pointTwo + " " + pointOne)
-      }
-    } else {
-      // FIRST TIME SELECTING
-      this.setState({ selected: pointOne });
-    }
+  onSelectionChange(newState) {
+    const { origin, destiny } = newState;
+    this.setState({ origin, destiny, route: this.findRouteFor(origin, destiny) });
   }
 
   renderRoute() {
     if (this.state.route !== null) {
-      let routeObject = routesList[this.state.route[0]];
+      let routeObject = routesList[this.state.route];
       let points = routeObject.points.map((point) => markersList[point-1].coords);
       return (
         <MapView.Polyline
@@ -112,12 +97,8 @@ export default class App extends React.Component<{}> {
   renderMarkers() {
     return markersList.map((point) => {
       if (point.visible) {
-        let pinColor = this.defaultPinColor;
-        if (this.state.route !== null) {
-          if (this.state.route[1] === point.id || this.state.route[2] === point.id) {
-            pinColor = this.selectedPinColor;
-          }
-        }
+        let pinColor = (this.state.origin === point.id || this.state.destiny === point.id) ?
+                        this.selectedPinColor : this.defaultPinColor;
         return (
           <MapView.Marker
             key={point.id}
@@ -131,7 +112,7 @@ export default class App extends React.Component<{}> {
   }
 
   render() {
-    const {mapStyle, topViewStyle, menuItem} = styles;
+    const { mapStyle, topViewStyle, menuItem } = styles;
 
     return (
       <View style={{ flex: 1 }}>
@@ -147,9 +128,12 @@ export default class App extends React.Component<{}> {
             {this.renderRoute()}
         </MapView>
 
-        <NavigationBar locationList={markersList} />
+        <NavigationBar
+          locationList={markersList}
+          onStateChange={this.onSelectionChange.bind(this)}
+        />
 
-        <Modal
+        {/* <Modal
           animationType="slide"
           transparent={false}
           visible={this.state.modalVisible}
@@ -158,7 +142,6 @@ export default class App extends React.Component<{}> {
           <ModalContents
             headerText={this.state.selected === null ? "Escolha o seu local atual " : "Escolha para onde quer ir"}
             onButtonPress={() => this.setModalVisible(!this.state.modalVisible)}
-            onLinkPress={this.selectLocation.bind(this)}
             selected={this.state.selected}
           />
         </Modal>
@@ -168,7 +151,7 @@ export default class App extends React.Component<{}> {
           <ActionButton.Item buttonColor="#03406A" title="Encontrar" onPress={() => this.setModalVisible(true) }>
             <Text style={menuItem}>{"?"}</Text>
           </ActionButton.Item>
-        </ActionButton>
+        </ActionButton> */}
       </View>
     );
   }
