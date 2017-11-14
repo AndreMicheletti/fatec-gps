@@ -41,6 +41,8 @@ export default class App extends React.Component<{}> {
     route: null
   }
 
+  _markers = new Array(markersList.lenght)
+
   componentWillMount() {
     BackHandler.addEventListener('resetSelection', this.onBackPressed.bind(this));
   }
@@ -77,6 +79,8 @@ export default class App extends React.Component<{}> {
 
   onSelectionChange(newState) {
     const { origin, destiny } = newState;
+    if (origin && origin != this.state.origin) { this._markers[origin].showCallout(); }
+    if (destiny && destiny != this.state.destiny) { this._markers[destiny].showCallout(); }
     this.setState({ origin, destiny, route: this.findRouteFor(origin, destiny) });
   }
 
@@ -99,8 +103,14 @@ export default class App extends React.Component<{}> {
       if (point.visible) {
         let pinColor = (this.state.origin === point.id || this.state.destiny === point.id) ?
                         this.selectedPinColor : this.defaultPinColor;
+        // let callout = (this.state.origin === point.id) ? { ref: (ref) => ref.showCallout() } : null
         return (
           <MapView.Marker
+            ref={(ref) => {
+              if (!this._markers[point.id]) {
+                this._markers[point.id] = ref;
+              }
+            }}
             key={point.id}
             coordinate={point.coords}
             title={point.title}
