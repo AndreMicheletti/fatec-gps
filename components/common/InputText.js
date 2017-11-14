@@ -19,9 +19,10 @@ class InputText extends React.Component {
       inputStyle: {
         color: '#000',
         paddingRight: 5,
-        paddingLeft: 5,
+        paddingLeft: 10,
         fontSize: 16,
-        flex: 2
+        flex: 2,
+        ...this.props.extraInputStyle
       }
     };
   }
@@ -38,16 +39,13 @@ class InputText extends React.Component {
 
   render() {
     const { textStyle, inputStyle, containerStyle } = this.getStyles();
+
     return(
       <View style={containerStyle}>
         {this.renderLabel()}
         <TextInput
-          value={this.props.value}
+          {...this.props}
           style={inputStyle}
-          onChangeText={this.props.onChangeText}
-          placeholder={this.props.placeholder}
-          autoCorrect={this.props.autoCorrect}
-          secureTextEntry={this.props.secureTextEntry}
           underlineColorAndroid="rgba(255,255,255,0)"
         />
       </View>
@@ -59,7 +57,8 @@ InputText.defaultProps = {
   placeholder: "placeholder",
   label: null,
   autoCorrect: false,
-  secureTextEntry: false
+  secureTextEntry: false,
+  extraInputStyle: {},
 }
 
-export { InputText }
+export { InputText };

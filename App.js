@@ -15,6 +15,7 @@ import MapView from 'react-native-maps';
 import ActionButton from 'react-native-action-button';
 
 import ModalContents from './components/ModalContents'
+import NavigationBar from './components/NavigationBar'
 
 import mapSettings from './data/mapSettings.js'
 import markersList from './data/markers.json'
@@ -29,16 +30,18 @@ const fatecRegion = {
 
 export default class App extends React.Component<{}> {
 
-  // Modal
-  state = {
-    modalVisible: false,
-    selected: null,
-    route: null
-  }
-
   defaultPinColor = "#E74C3C"
   selectedPinColor = "#03406A"
   routeStrokeColor = "#009D91"
+
+  state = {
+    modalVisible: false,
+    origin: null,
+    destiny: null,
+    route: null
+  }
+
+  _markers = new Array(markersList.lenght)
 
   componentWillMount() {
     BackHandler.addEventListener('resetSelection', this.onBackPressed.bind(this));
@@ -49,8 +52,8 @@ export default class App extends React.Component<{}> {
       if (this.state.route) {
         this.setState({ route: null });
         return true;
-      } else if (this.state.selected) {
-        this.setState({ selected: null });
+      } else if (this.state.origin || this.state.destiny) {
+        this.setState({ origin: null, destiny: null });
         return true;
       }
     }
@@ -62,41 +65,33 @@ export default class App extends React.Component<{}> {
   }
 
   findRouteFor(pointOne, pointTwo) {
+    if (pointOne === pointTwo) {
+      return null;
+    }
     let foundRoute = null;
     routesList.forEach( (item, index) => {
-      if (item["routeFrom"].includes(parseInt(pointOne)) && item.routeFrom.includes(parseInt(pointTwo))) {
+      if (item["routeFrom"].includes(pointOne) && item.routeFrom.includes(pointTwo)) {
         foundRoute = parseInt(item["id"]) - 1;
       }
     });
     return foundRoute;
   }
 
-  selectLocation(pointOne) {
-    this.setState({ route: null, selected: pointOne });
-    const pointTwo = this.state.selected;
-
-    if (pointTwo !== null) {
-      // IF SAME SELECTED
-      if (pointTwo == pointOne) {
-        this.setState({ route: null, selected: null, modalVisible: false });
-        return;
-      }
-      // LOOK FOR ROUTE
-      let route = this.findRouteFor(pointTwo, pointOne);
-      if (route !== null) {
-        this.setState({ route: [route, pointOne, pointTwo], selected: null, modalVisible: false });
-      } else {
-        console.log("route not found for " + pointTwo + " " + pointOne)
-      }
-    } else {
-      // FIRST TIME SELECTING
-      this.setState({ selected: pointOne });
+  onSelectionChange(newState) {
+    const { origin, destiny } = newState;
+    if (origin && origin != this.state.origin && this._markers[origin]) {
+      // Show Marker callout on origin if origin was changed
+      this._markers[origin].showCallout();
+    } else if (destiny && destiny != this.state.destiny && this._markers[destiny]) {
+      // Show Marker callout on destiny if destiny was changed
+      this._markers[destiny].showCallout();
     }
+    this.setState({ origin, destiny, route: this.findRouteFor(origin, destiny) });
   }
 
   renderRoute() {
     if (this.state.route !== null) {
-      let routeObject = routesList[this.state.route[0]];
+      let routeObject = routesList[this.state.route];
       let points = routeObject.points.map((point) => markersList[point-1].coords);
       return (
         <MapView.Polyline
@@ -111,14 +106,16 @@ export default class App extends React.Component<{}> {
   renderMarkers() {
     return markersList.map((point) => {
       if (point.visible) {
-        let pinColor = this.defaultPinColor;
-        if (this.state.route !== null) {
-          if (this.state.route[1] === point.id || this.state.route[2] === point.id) {
-            pinColor = this.selectedPinColor;
-          }
-        }
+        let pinColor = (this.state.origin === point.id || this.state.destiny === point.id) ?
+                        this.selectedPinColor : this.defaultPinColor;
+        // let callout = (this.state.origin === point.id) ? { ref: (ref) => ref.showCallout() } : null
         return (
           <MapView.Marker
+            ref={(ref) => {
+              if (!this._markers[point.id]) {
+                this._markers[point.id] = ref;
+              }
+            }}
             key={point.id}
             coordinate={point.coords}
             title={point.title}
@@ -130,7 +127,7 @@ export default class App extends React.Component<{}> {
   }
 
   render() {
-    const {mapStyle, topViewStyle, menuItem} = styles;
+    const { mapStyle, topViewStyle, menuItem } = styles;
 
     return (
       <View style={{ flex: 1 }}>
@@ -146,6 +143,11 @@ export default class App extends React.Component<{}> {
             {this.renderRoute()}
         </MapView>
 
+        <NavigationBar
+          locationList={markersList}
+          onStateChange={this.onSelectionChange.bind(this)}
+        />
+
         <Modal
           animationType="slide"
           transparent={false}
@@ -153,16 +155,18 @@ export default class App extends React.Component<{}> {
           onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}>
 
           <ModalContents
-            headerText={this.state.selected === null ? "Escolha o seu local atual " : "Escolha para onde quer ir"}
+            headerText={"Legenda - Encontre sua sala"}
             onButtonPress={() => this.setModalVisible(!this.state.modalVisible)}
-            onLinkPress={this.selectLocation.bind(this)}
-            selected={this.state.selected}
+            onLinkPress={(target) => {
+              this.onSelectionChange({ origin: target, destiny: this.state.destiny });
+              this.setState({ modalVisible: false });
+            }}
           />
         </Modal>
 
 
         <ActionButton buttonColor="#e74c3c">
-          <ActionButton.Item buttonColor="#03406A" title="Encontrar" onPress={() => this.setModalVisible(true) }>
+          <ActionButton.Item buttonColor="#03406A" title="Legenda" onPress={() => this.setModalVisible(true) }>
             <Text style={menuItem}>{"?"}</Text>
           </ActionButton.Item>
         </ActionButton>

@@ -1,50 +1,28 @@
 import React from 'react'
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  Text
-} from 'react-native'
+import { View, ScrollView, StyleSheet, Text } from 'react-native'
 
-import TextLink from './TextLink'
 import { Container, ContainerSection, Button } from './common/'
+import TextLink from './TextLink'
 
 import links from '../data/links.json'
 
 class ModalContents extends React.Component {
 
   renderLinks(linkList) {
-    const {
-      selected,
-      onLinkPress,
-    } = this.props;
+    const { onLinkPress } = this.props;
 
     return linkList.map((item) => {
       const text = item["text"];
       const target = item["target"];
       return (
-        <TextLink
-          key={text}
-          text={text}
-          onPress={() => onLinkPress(target)}
-          visible={(selected === target ? false : true)}
-        />
+        <TextLink key={text} text={text} onPress={() => onLinkPress(target)} />
       );
     });
   }
 
   render() {
-
-    const {
-      linkContainerStyle,
-      headerTextStyle,
-      subHeaderTextStyle
-    } = styles;
-
-    const {
-      headerText,
-      onButtonPress
-    } = this.props;
+    const { linkContainerStyle, headerTextStyle, subHeaderTextStyle } = styles;
+    const { headerText, onButtonPress } = this.props;
 
     return (
       <ScrollView>
@@ -74,6 +52,13 @@ class ModalContents extends React.Component {
       </ScrollView>
     );
   }
+}
+
+
+ModalContents.defaultProps = {
+  headerText: 'Modal Contents',
+  onLinkPress: (() => console.log('[default] link pressed!')),
+  onButtonPress: (() => console.log('[default] button press!'))
 }
 
 const styles = StyleSheet.create({
