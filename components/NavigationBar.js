@@ -1,41 +1,57 @@
 import React from 'react';
-import { View, Text, Dimensions } from 'react-native';
+import { View, Dimensions } from 'react-native';
+import { PickerInput } from './common'
 
-import { InputText } from './common'
 
 var { height, width } = Dimensions.get('window');
+
 
 export default class NavigationBar extends React.Component {
 
   state = {
-    fromInputFocus: true,
+    origin: null,
+    destiny: null
   }
 
-  nextFocus() {
-    console.log('yea!');
-    this.setState({ fromInputFocus: false });
+  getLocationList(excluding) {
+    return this.props.locationList.map((location) => {
+      if (location.id !== excluding && location.visible == true) {
+        return { label: location.title, value: location.id};
+      } else {
+        return false;
+      }
+    }).filter(x => !!x);;
   }
 
   render() {
     const { floatView, boxView, inputStyle } = styles;
+    const { origin, destiny } = this.state;
+
     return (
       <View style={floatView}>
         <View style={boxView}>
-          <InputText
-            placeholder="Onde você está?"
-            extraInputStyle={inputStyle}
-            focus={this.state.fromInputFocus}
+          <PickerInput
+            label="Seu local"
+            mode='dropdown'
+            itemList={[{ label: 'Onde você está?', value: 'default' }, ...this.getLocationList(destiny)]}
+            onValueChange={(itemValue, itemIndex) => this.setState({ origin: itemValue })}
           />
-          <InputText
-            placeholder="Para onde quer ir?"
-            extraInputStyle={inputStyle}
-            focus={!this.state.fromInputFocus}
+          <PickerInput
+            label="Destino"
+            mode='dropdown'
+            itemList={[{ label: 'Para onde vai?', value: 'default' }, ...this.getLocationList(origin)]}
+            onValueChange={(itemValue, itemIndex) => this.setState({ destiny: itemValue })}
           />
         </View>
       </View>
     );
   }
 }
+
+NavigationBar.defaultProps = {
+  locationList: [],
+  onRouteChange: (() => console.log('route changed!'))
+};
 
 const styles = {
   floatView: {
