@@ -35,7 +35,7 @@ export default class App extends React.Component<{}> {
   routeStrokeColor = "#009D91"
 
   state = {
-    // modalVisible: false,
+    modalVisible: false,
     origin: null,
     destiny: null,
     route: null
@@ -60,9 +60,9 @@ export default class App extends React.Component<{}> {
     return false;
   }
 
-  // setModalVisible(visible) {
-  //   this.setState({ modalVisible: visible });
-  // }
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
 
   findRouteFor(pointOne, pointTwo) {
     if (pointOne === pointTwo) {
@@ -79,8 +79,13 @@ export default class App extends React.Component<{}> {
 
   onSelectionChange(newState) {
     const { origin, destiny } = newState;
-    if (origin && origin != this.state.origin) { this._markers[origin].showCallout(); }
-    if (destiny && destiny != this.state.destiny) { this._markers[destiny].showCallout(); }
+    if (origin && origin != this.state.origin && this._markers[origin]) {
+      // Show Marker callout on origin if origin was changed
+      this._markers[origin].showCallout();
+    } else if (destiny && destiny != this.state.destiny && this._markers[destiny]) {
+      // Show Marker callout on destiny if destiny was changed
+      this._markers[destiny].showCallout();
+    }
     this.setState({ origin, destiny, route: this.findRouteFor(origin, destiny) });
   }
 
@@ -143,25 +148,28 @@ export default class App extends React.Component<{}> {
           onStateChange={this.onSelectionChange.bind(this)}
         />
 
-        {/* <Modal
+        <Modal
           animationType="slide"
           transparent={false}
           visible={this.state.modalVisible}
           onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}>
 
           <ModalContents
-            headerText={this.state.selected === null ? "Escolha o seu local atual " : "Escolha para onde quer ir"}
+            headerText={"Legenda - Encontre sua sala"}
             onButtonPress={() => this.setModalVisible(!this.state.modalVisible)}
-            selected={this.state.selected}
+            onLinkPress={(target) => {
+              this.onSelectionChange({ origin: target, destiny: this.state.destiny });
+              this.setState({ modalVisible: false });
+            }}
           />
         </Modal>
 
 
         <ActionButton buttonColor="#e74c3c">
-          <ActionButton.Item buttonColor="#03406A" title="Encontrar" onPress={() => this.setModalVisible(true) }>
+          <ActionButton.Item buttonColor="#03406A" title="Legenda" onPress={() => this.setModalVisible(true) }>
             <Text style={menuItem}>{"?"}</Text>
           </ActionButton.Item>
-        </ActionButton> */}
+        </ActionButton>
       </View>
     );
   }
