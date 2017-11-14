@@ -147,7 +147,7 @@ export default class App extends React.Component<{}> {
             {this.renderRoute()}
         </MapView>
 
-        <NavigationBar />
+        <NavigationBar locationList={markersList} />
 
         <Modal
           animationType="slide"
