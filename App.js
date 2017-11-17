@@ -16,6 +16,7 @@ import ActionButton from 'react-native-action-button';
 
 import ModalContents from './components/ModalContents'
 import NavigationBar from './components/NavigationBar'
+import LocationMarker from './components/LocationMarker'
 
 import mapSettings from './data/mapSettings.js'
 import markersList from './data/markers.json'
@@ -137,7 +138,7 @@ export default class App extends React.Component<{}> {
           style={mapStyle}
           initialRegion={fatecRegion}
           region={fatecRegion}>
-
+            <LocationMarker />
             {/* Render Markers */}
             {this.renderMarkers()}
             {this.renderRoute()}
