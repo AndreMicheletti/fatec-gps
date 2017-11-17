@@ -4,24 +4,25 @@ import {
    BackHandler,
    Modal,
    Text,
-   Button,
    View,
    StyleSheet,
    Platform,
-   Image
+   Dimensions
  } from 'react-native';
 
 import MapView from 'react-native-maps';
 import ActionButton from 'react-native-action-button';
 
-import ModalContents from './components/ModalContents'
-import NavigationBar from './components/NavigationBar'
-import LocationMarker from './components/LocationMarker'
+import ModalContents from './src/components/ModalContents';
+import NavigationBar from './src/components/NavigationBar';
 
-import mapSettings from './data/mapSettings.js'
-import markersList from './data/markers.json'
-import routesList from './data/routes.json'
+import mapSettings from './src/data/mapSettings.js';
+import markersList from './src/data/markers.json';
+import routesList from './src/data/routes.json';
 
+import { getDistanceFromLatLonInKm } from './src/gpsHelper';
+
+// FATEC REGION CONSTANT: map is centered in this position
 const fatecRegion = {
   latitude: -23.529202,
   longitude: -46.632795,
@@ -29,24 +30,49 @@ const fatecRegion = {
   longitudeDelta: 0.002,
 }
 
+var { height, width } = Dimensions.get('window');
+
 export default class App extends React.Component<{}> {
 
-  defaultPinColor = "#E74C3C"
-  selectedPinColor = "#03406A"
-  routeStrokeColor = "#009D91"
-
-  state = {
-    modalVisible: false,
-    origin: null,
-    destiny: null,
-    route: null
-  }
+  /*
+    CLASS VARIABLES and STATE
+  */
 
   _markers = new Array(markersList.lenght)
 
+  sphereImage = require('./assets/sphere.png');
+  colors = {
+    red: "#A60000",
+    blue: "#3D9AD1",
+    routeBlue: "#009D91"
+  }
+
+  state = {
+    modalVisible: false, // is modal visible?
+    origin: null, // selected origin (marker id)
+    destiny: null, // selected destination (marker id)
+    route: null, // calculated route (route id)
+    userLocation: null, // current user location (coordinates)
+    nearest: null // nearest marker to user position
+  }
+
+  /*
+    LIFECYCLE METHODS
+  */
+
   componentWillMount() {
     BackHandler.addEventListener('resetSelection', this.onBackPressed.bind(this));
+    if (Platform.OS === 'android' && !Constants.isDevice) {
+      console.log('This will not work on Sketch in an Android emulator. Try it on your device!');
+    } else {
+      setInterval(this._getLocationAsync.bind(this), 1500);
+      // this._getLocationAsync();
+    }
   }
+
+  /*
+    HELPER METHODS :: OVERALL
+  */
 
   onBackPressed() {
     if (this) {
@@ -65,17 +91,21 @@ export default class App extends React.Component<{}> {
     this.setState({ modalVisible: visible });
   }
 
-  findRouteFor(pointOne, pointTwo) {
-    if (pointOne === pointTwo) {
-      return null;
-    }
-    let foundRoute = null;
-    routesList.forEach( (item, index) => {
-      if (item["routeFrom"].includes(pointOne) && item.routeFrom.includes(pointTwo)) {
-        foundRoute = parseInt(item["id"]) - 1;
-      }
-    });
-    return foundRoute;
+  /*
+    HELPER METHODS :: ROUTE
+  */
+
+  renderRoute() {
+    if (this.state.route !== null) {
+      let routeObject = routesList[this.state.route];
+      let points = routeObject.points.map((point) => markersList[point-1].coords);
+      return (
+        <MapView.Polyline
+          coordinates={points}
+          strokeColor={this.colors.routeBlue}
+          strokeWidth={3}
+        />
+      )}
   }
 
   onSelectionChange(newState) {
@@ -90,26 +120,29 @@ export default class App extends React.Component<{}> {
     this.setState({ origin, destiny, route: this.findRouteFor(origin, destiny) });
   }
 
-  renderRoute() {
-    if (this.state.route !== null) {
-      let routeObject = routesList[this.state.route];
-      let points = routeObject.points.map((point) => markersList[point-1].coords);
-      return (
-        <MapView.Polyline
-          coordinates={points}
-          strokeColor={this.routeStrokeColor}
-          strokeWidth={3}
-        />
-      );
+  findRouteFor(pointOne, pointTwo) {
+    if (pointOne === pointTwo) {
+      return null;
     }
+    let foundRoute = null;
+    routesList.forEach( (item, index) => {
+      if (item["routeFrom"].includes(pointOne) && item.routeFrom.includes(pointTwo)) {
+        foundRoute = parseInt(item["id"]) - 1;
+      }
+    });
+    return foundRoute;
   }
 
+  /*
+    HELPER METHODS :: MARKERS
+  */
+
   renderMarkers() {
+    const { origin, destiny } = this.state;
     return markersList.map((point) => {
       if (point.visible) {
-        let pinColor = (this.state.origin === point.id || this.state.destiny === point.id) ?
-                        this.selectedPinColor : this.defaultPinColor;
-        // let callout = (this.state.origin === point.id) ? { ref: (ref) => ref.showCallout() } : null
+        let pinColor = (origin === point.id || destiny === point.id) ?
+                        this.colors.blue : this.colors.red;
         return (
           <MapView.Marker
             ref={(ref) => {
@@ -127,34 +160,99 @@ export default class App extends React.Component<{}> {
     });
   }
 
+  /*
+    HELPER METHODS :: USER LOCATION
+  */
+
+  _getLocationAsync = async () => {
+    try {
+      let { status } = await Permissions.askAsync(Permissions.LOCATION);
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        this.setState({ userLocation: null });
+      } else {
+        let location = await Location.getCurrentPositionAsync({});
+        if (location !== this.state.location) {
+          this.setState({
+            userLocation: location.coords,
+            nearest: this.getNearestMarker(location.coords)
+          });
+        }
+      }
+    } catch (e) {
+      console.log('Permission to access location thrown an error');
+      console.log(e.stack)
+      this.setState({ userLocation: null });
+    }
+  };
+
+  renderUserLocation() {
+      if (this.state.userLocation !== null) {
+        return <MapView.Marker coordinate={this.state.userLocation} title='Voce está aqui' image={this.sphereImage} />;
+      } else {
+        return null;
+      }
+  }
+
+  renderUserLocationMessage() {
+    const { userLocation, nearest } = this.state;
+    if (this.state.userLocation !== null) {
+      return (<Text>{this.distanceBasedText(nearest.distance)}{nearest.title}</Text>);
+    } else {
+      return (<Text>Seu GPS não está ativado.</Text>);
+    }
+  }
+
+  distanceBasedText(distanceInKm) {
+    if (distanceInKm > 0.8) {
+      return "Você está mais próximo do(a) ";
+    } else if (distanceInKm >= 0.4) {
+      return "Você está próximo do(a) ";
+    } else {
+      return "Você está no(a) ";
+    }
+  }
+
+  getNearestMarker(pos) {
+    let { latitude, longitude } = pos;
+    let nearest = {
+      id: null,
+      title: '',
+      distance: 9999
+    };
+    markersList.forEach((point) => {
+      let distance = getDistanceFromLatLonInKm(latitude, longitude, point.coords.latitude, point.coords.longitude);
+      if (distance < nearest.distance) {
+        nearest = { id: point.id, title: point.title, distance: distance };
+      }
+    });
+    return nearest;
+  }
+
+  /*
+    MAIN METHOD :: RENDER
+  */
+
   render() {
     const { mapStyle, topViewStyle, menuItem } = styles;
 
     return (
       <View style={{ flex: 1 }}>
 
-        <MapView
-          {...mapSettings}
-          style={mapStyle}
-          initialRegion={fatecRegion}
-          region={fatecRegion}>
-            <LocationMarker />
-            {/* Render Markers */}
+        <MapView {...mapSettings} style={mapStyle} initialRegion={fatecRegion} region={fatecRegion}>
             {this.renderMarkers()}
+            {this.renderUserLocation()}
             {this.renderRoute()}
         </MapView>
 
-        <NavigationBar
-          locationList={markersList}
-          onStateChange={this.onSelectionChange.bind(this)}
-        />
+        <NavigationBar locationList={markersList} onStateChange={this.onSelectionChange.bind(this)}  />
 
         <Modal
           animationType="slide"
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}>
-
+          onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
+        >
           <ModalContents
             headerText={"Legenda - Encontre sua sala"}
             onButtonPress={() => this.setModalVisible(!this.state.modalVisible)}
@@ -165,20 +263,41 @@ export default class App extends React.Component<{}> {
           />
         </Modal>
 
-
-        <ActionButton buttonColor="#e74c3c">
+        <View style={styles.bottomViewStyle}>
+          {this.renderUserLocationMessage()}
+        </View>
+        {/* <ActionButton buttonColor="#e74c3c">
           <ActionButton.Item buttonColor="#03406A" title="Legenda" onPress={() => this.setModalVisible(true) }>
             <Text style={menuItem}>{"?"}</Text>
           </ActionButton.Item>
-        </ActionButton>
+        </ActionButton> */}
       </View>
     );
   }
 }
 
+/*
+  STYLES
+*/
+
 const styles = StyleSheet.create({
   mapStyle: {
     flex: 1
+  },
+  bottomViewStyle: {
+    position: 'absolute', bottom: 0,
+    width: width,
+    marginBottom: 20,
+    paddingBottom: 8, paddingTop: 8, paddingLeft: 10, paddingRight: 10,
+    alignSelf: 'center',
+    alignContent: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    elevation: 2,
   },
   modalContainer:{
     flex: 1,

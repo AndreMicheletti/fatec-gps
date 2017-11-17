@@ -6,12 +6,10 @@
     "privacy": "public",
     "android": {
       "package": "edu.fatecsp.fatecgps",
-      "versionCode": 1,
+      "versionCode": 5,
       "icon": "./assets/icon.png",
-      "permissions": [
-        "ACCESS_FINE_LOCATION"
-      ]
+      "permissions": [ "ACCESS_FINE_LOCATION" ]
     },
-    "version": "0.1.0"
+    "version": "0.5.0"
   }
 }
