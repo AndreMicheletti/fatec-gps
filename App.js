@@ -10,7 +10,7 @@ import {
    Dimensions
  } from 'react-native';
 
-import MapView from 'react-native-maps';
+import { MapView } from 'expo';
 import ActionButton from 'react-native-action-button';
 
 import ModalContents from './src/components/ModalContents';
@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
   bottomViewStyle: {
     position: 'absolute', bottom: 0,
     width: width,
-    marginBottom: 20,
+    marginBottom: 32,
     paddingBottom: 8, paddingTop: 8, paddingLeft: 10, paddingRight: 10,
     alignSelf: 'center',
     alignContent: 'center',
