@@ -1,5 +1,7 @@
 export default mapSettings = {
   showsPointsOfInterest: false,
+  showsBuildings: false,
+  showsTraffic: false,
   scrollEnabled: false,
   rotateEnabled: false,
   zoomEnabled: false,

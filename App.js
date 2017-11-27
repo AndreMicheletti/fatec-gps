@@ -20,6 +20,9 @@ import mapSettings from './src/data/mapSettings.js';
 import markersList from './src/data/markers.json';
 import routesList from './src/data/routes.json';
 
+// Style imports
+import googleMapStyle from './src/styles/darkMapStyle.json';
+
 // Helper imports
 import { getDistanceFromLatLonInKm } from './src/gpsHelper';
 
@@ -240,7 +243,13 @@ export default class App extends React.Component<{}> {
     return (
       <View style={{ flex: 1 }}>
 
-        <MapView {...mapSettings} style={mapStyle} initialRegion={fatecRegion} region={fatecRegion}>
+        <MapView
+          {...mapSettings}
+          style={mapStyle}
+          initialRegion={fatecRegion}
+          region={fatecRegion}
+          customMapStyle={googleMapStyle}
+        >
             {this.renderMarkers()}
             {this.renderUserLocation()}
             {this.renderRoute()}
