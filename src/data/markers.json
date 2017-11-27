@@ -4,8 +4,8 @@
     "visible": true,
     "title": "Entrada",
     "coords":  {
-      "latitude": -23.529734,
-      "longitude": -46.632096,
+      "latitude": -23.529715,
+      "longitude": -46.632205,
       "latitudeDelta": 0.002,
       "longitudeDelta": 0.002,
     }
@@ -166,4 +166,40 @@
       "longitudeDelta": 0.002,
     }
   },
+
+  {
+    "id": 15,
+    "visible": true,
+    "title": "Auditório Prof. Wladimir Anversa",
+    "coords":  {
+      "latitude": -23.529548,
+      "longitude": -46.632354,
+      "latitudeDelta": 0.002,
+      "longitudeDelta": 0.002,
+    }
+  },
+
+  {
+    "id": 16,
+    "visible": true,
+    "title": "Cantina",
+    "coords":  {
+      "latitude": -23.528781,
+      "longitude": -46.632748,
+      "latitudeDelta": 0.002,
+      "longitudeDelta": 0.002,
+    }
+  },
+
+  {
+    "id": 17,
+    "visible": false,
+    "title": "Conexão Cantina",
+    "coords":  {
+      "latitude": -23.528856,
+      "longitude": -46.632678,
+      "latitudeDelta": 0.002,
+      "longitudeDelta": 0.002,
+    }
+  }
 ]

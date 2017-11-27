@@ -21,7 +21,7 @@ import markersList from './src/data/markers.json';
 import routesList from './src/data/routes.json';
 
 // Style imports
-import googleMapStyle from './src/styles/darkMapStyle.json';
+import googleMapStyle from './src/styles/mapStyle.json';
 
 // Helper imports
 import { getDistanceFromLatLonInKm } from './src/gpsHelper';
@@ -224,7 +224,7 @@ export default class App extends React.Component<{}> {
       title: '',
       distance: 9999
     };
-    markersList.forEach((point) => {
+    markersList.filter((point) => point.visible).forEach((point) => {
       let distance = getDistanceFromLatLonInKm(latitude, longitude, point.coords.latitude, point.coords.longitude);
       if (distance < nearest.distance) {
         nearest = { id: point.id, title: point.title, distance: distance };

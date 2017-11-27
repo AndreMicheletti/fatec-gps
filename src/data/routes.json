@@ -96,4 +96,86 @@
     "routeFrom": [3, 6],
     "points": [3, 12, 8, 13, 6]
   },
+
+  {
+    "id": 16,
+    "name": "Cantina - Bloco A",
+    "routeFrom": [16, 3],
+    "points": [16, 17, 12, 3]
+  },
+  {
+    "id": 17,
+    "name": "Cantina - Bloco B",
+    "routeFrom": [16, 2],
+    "points": [16, 17, 11, 2]
+  },
+  {
+    "id": 18,
+    "name": "Cantina - Etesp",
+    "routeFrom": [16, 6],
+    "points": [16, 17, 8, 13, 6]
+  },
+  {
+    "id": 19,
+    "name": "Cantina - Entrada",
+    "routeFrom": [16, 1],
+    "points": [16, 17, 8, 1]
+  },
+  {
+    "id": 20,
+    "name": "Cantina - Santhigo",
+    "routeFrom": [16, 4],
+    "points": [16, 17, 8, 7, 9, 4]
+  },
+  {
+    "id": 21,
+    "name": "Cantina - CA",
+    "routeFrom": [16, 5],
+    "points": [16, 17, 8, 7, 10, 5]
+  },
+  {
+    "id": 22,
+    "name": "Cantina - Auditorio",
+    "routeFrom": [16, 15],
+    "points": [16, 17, 8, 1, 15]
+  },
+
+
+  {
+    "id": 23,
+    "name": "Auditorio - Entrada",
+    "routeFrom": [15, 1],
+    "points": [15, 1]
+  },
+  {
+    "id": 24,
+    "name": "Auditorio - Santhigo",
+    "routeFrom": [15, 4],
+    "points": [15, 1, 7, 9, 4]
+  },
+  {
+    "id": 25,
+    "name": "Auditorio - CA",
+    "routeFrom": [15, 5],
+    "points": [15, 1, 7, 10, 5]
+  },
+  {
+    "id": 26,
+    "name": "Auditorio - Bloco B",
+    "routeFrom": [15, 2],
+    "points": [15, 1, 8, 11, 2]
+  },
+  {
+    "id": 27,
+    "name": "Auditorio - Bloco A",
+    "routeFrom": [15, 3],
+    "points": [15, 1, 8, 12, 3]
+  },
+  {
+    "id": 28,
+    "name": "Auditorio - Bloco Etesp",
+    "routeFrom": [15, 6],
+    "points": [15, 1, 8, 13, 6]
+  },
+
 ]
