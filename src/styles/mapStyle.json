@@ -1,10 +1,45 @@
 [
   {
+    "stylers": [
+      {
+        "saturation": -15
+      },
+      {
+        "gamma": 0.32
+      }
+    ]
+  },
+  {
+    "featureType": "administrative",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "landscape",
+    "stylers": [
+      {
+        "visibility": "simplified"
+      }
+    ]
+  },
+  {
     "featureType": "landscape.man_made",
     "elementType": "geometry",
     "stylers": [
       {
-        "visibility": "on"
+        "visibility": "simplified"
+      }
+    ]
+  },
+  {
+    "featureType": "landscape.man_made",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "visibility": "simplified"
       }
     ]
   },
@@ -13,13 +48,48 @@
     "elementType": "geometry.stroke",
     "stylers": [
       {
-        "color": "#3e8ede"
+        "visibility": "simplified"
       }
     ]
   },
   {
-    "featureType": "landscape.man_made",
+    "featureType": "poi",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
     "elementType": "labels",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "labels",
+    "stylers": [
+      {
+        "visibility": "simplified"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry",
     "stylers": [
       {
         "visibility": "on"
@@ -27,10 +97,38 @@
     ]
   },
   {
-    "featureType": "poi",
+    "featureType": "road.local",
     "stylers": [
       {
-        "visibility": "off"
+        "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "stylers": [
+      {
+        "visibility": "simplified"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.line",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#3f518c"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "stylers": [
+      {
+        "color": "#84afa3"
+      },
+      {
+        "lightness": 50
       }
     ]
   }

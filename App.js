@@ -48,7 +48,7 @@ export default class App extends React.Component<{}> {
   colors = {
     red: "#A60000",
     blue: "#3D9AD1",
-    routeBlue: "#009D91"
+    route: "#1184d6"
   }
 
   state = {
@@ -106,8 +106,8 @@ export default class App extends React.Component<{}> {
       return (
         <MapView.Polyline
           coordinates={points}
-          strokeColor={this.colors.routeBlue}
-          strokeWidth={3}
+          strokeColor={this.colors.route}
+          strokeWidth={4}
         />
       )}
   }
