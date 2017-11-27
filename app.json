@@ -4,10 +4,10 @@
     "slug": "fatec-gps",
     "sdkVersion": "21.0.0",
     "privacy": "public",
-    "version": "0.6.0",
+    "version": "0.7.0",
     "android": {
       "package": "edu.fatecsp.fatecgps",
-      "versionCode": 6,
+      "versionCode": 7,
       "icon": "./assets/icon.png",
       "permissions": [ "ACCESS_FINE_LOCATION" ],
       "config": {
