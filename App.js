@@ -1,5 +1,6 @@
 import React from 'react';
-import { Constants, Location, Permissions } from 'expo';
+import ActionButton from 'react-native-action-button';
+import { Constants, Location, Permissions, MapView } from 'expo';
 import {
    BackHandler,
    Modal,
@@ -10,16 +11,16 @@ import {
    Dimensions
  } from 'react-native';
 
-import { MapView } from 'expo';
-import ActionButton from 'react-native-action-button';
-
+// Component imports
 import ModalContents from './src/components/ModalContents';
 import NavigationBar from './src/components/NavigationBar';
 
+// Data imports
 import mapSettings from './src/data/mapSettings.js';
 import markersList from './src/data/markers.json';
 import routesList from './src/data/routes.json';
 
+// Helper imports
 import { getDistanceFromLatLonInKm } from './src/gpsHelper';
 
 // FATEC REGION CONSTANT: map is centered in this position
@@ -181,7 +182,7 @@ export default class App extends React.Component<{}> {
       }
     } catch (e) {
       console.log('Permission to access location thrown an error');
-      console.log(e.stack)
+      // console.log(e.stack)
       this.setState({ userLocation: null });
     }
   };
