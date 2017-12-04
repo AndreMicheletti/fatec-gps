@@ -259,7 +259,7 @@ export default class App extends React.Component<{}> {
 
         <Modal
           animationType="slide"
-          transparent={false}
+          transparent
           visible={this.state.modalVisible}
           onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
         >
@@ -276,11 +276,12 @@ export default class App extends React.Component<{}> {
         <View style={styles.bottomViewStyle}>
           {this.renderUserLocationMessage()}
         </View>
-        {/* <ActionButton buttonColor="#e74c3c">
-          <ActionButton.Item buttonColor="#03406A" title="Legenda" onPress={() => this.setModalVisible(true) }>
-            <Text style={menuItem}>{"?"}</Text>
-          </ActionButton.Item>
-        </ActionButton> */}
+        <ActionButton
+          offsetY={80}
+          buttonColor="#03406A"
+          onPress={() => this.setModalVisible(true) }
+          icon={<Text style={menuItem}>{"?"}</Text>}
+        />
       </View>
     );
   }

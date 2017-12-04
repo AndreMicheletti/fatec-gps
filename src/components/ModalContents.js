@@ -1,8 +1,8 @@
-import React from 'react'
-import { View, ScrollView, StyleSheet, Text } from 'react-native'
+import React from 'react';
+import { View, ScrollView, StyleSheet, Text } from 'react-native';
 
-import { Container, ContainerSection, Button } from './common/'
-import TextLink from './TextLink'
+import { Container, ContainerSection, Button } from './common/';
+import ClassroomsList from './ClassroomsList';
 
 import links from '../data/links.json'
 
@@ -21,35 +21,36 @@ class ModalContents extends React.Component {
   }
 
   render() {
-    const { linkContainerStyle, headerTextStyle, subHeaderTextStyle } = styles;
+    const {
+      linkContainerStyle,
+      headerTextStyle,
+      subHeaderTextStyle,
+      floatView
+    } = styles;
     const { headerText, onButtonPress } = this.props;
 
     return (
-      <ScrollView>
-        <Text style={headerTextStyle}>
-          {headerText}
-        </Text>
+      <View style={floatView}>
 
-        <ContainerSection>
-          <Text style={subHeaderTextStyle}>Locais</Text>
-        </ContainerSection>
+        <Container>
+          <ContainerSection>
+            <Text style={headerTextStyle}>
+              {headerText}
+            </Text>
+          </ContainerSection>
 
-        <View style={linkContainerStyle}>
-          {this.renderLinks(links["mainSection"])}
-        </View>
+          <ContainerSection>
+            <ClassroomsList />
+          </ContainerSection>
 
-        <ContainerSection>
-          <Text style={subHeaderTextStyle}>Salas Especiais</Text>
-        </ContainerSection>
+          <ContainerSection>
+            <Button onPress={onButtonPress} color="#FFECE9" backgroundColor="#A61700">
+              Fechar
+            </Button>
+          </ContainerSection>
+        </Container>
 
-        <View style={linkContainerStyle}>
-          {this.renderLinks(links["subSection"])}
-        </View>
-
-        <ContainerSection>
-          <Button onPress={onButtonPress} text="Fechar" color="#FFECE9" backgroundColor="#A61700"/>
-        </ContainerSection>
-      </ScrollView>
+      </View>
     );
   }
 }
@@ -62,30 +63,21 @@ ModalContents.defaultProps = {
 }
 
 const styles = StyleSheet.create({
-  linkContainerStyle: {
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 15,
-    paddingRight: 5
+  floatView: {
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    position: 'relative',
+    flex: 1,
+    justifyContent: 'center'
   },
   headerTextStyle:{
-    marginTop: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 26,
-    paddingLeft: 15
-  },
-  subHeaderTextStyle:{
     marginTop: 10,
     alignItems: 'center',
     justifyContent: 'center',
     color: 'black',
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 24,
     paddingLeft: 15
-  }
+  },
 });
 
 export default ModalContents;
