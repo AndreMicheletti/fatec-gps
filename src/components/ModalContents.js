@@ -58,7 +58,6 @@ class ModalContents extends React.Component {
 
 ModalContents.defaultProps = {
   headerText: 'Modal Contents',
-  onLinkPress: (() => console.log('[default] link pressed!')),
   onButtonPress: (() => console.log('[default] button press!'))
 }
 

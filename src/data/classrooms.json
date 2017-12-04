@@ -1,0 +1,29 @@
+[
+  {
+    "id": 0,
+    "name": "Santhiago",
+    "rooms": [
+      "Térreo - Sala de Estudos",
+      "Departamento de Tecnologia da Informação",
+      "Departamento de Eletrônica"
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Prédio A/B",
+    "rooms": [
+      "Térreo - Sala de Estudos",
+      "Departamento de Tecnologia da Informação",
+      "Departamento de Eletrônica"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Centro Acadêmico",
+    "rooms": [
+      "Térreo - Sala de Estudos",
+      "Departamento de Tecnologia da Informação",
+      "Departamento de Eletrônica"
+    ]
+  },
+]
