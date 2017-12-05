@@ -14,7 +14,7 @@
       {
         "name": "1° Andar",
         "rooms": [
-          "Sala 10S à 14S",
+          "Sala 10-S à 14-S",
           "Quadro de Vagas",
           "Dpt. Eletrônica",
           "Dpt. TI"
@@ -23,7 +23,7 @@
       {
         "name": "2° Andar",
         "rooms": [
-          "Sala 21S à 22S",
+          "Sala 21-S à 22-S",
           "Labs. de Informática",
           "Seção de Estágio"
         ]
@@ -31,7 +31,7 @@
       {
         "name": "3° Andar",
         "rooms": [
-          "Sala 31S à 34S"
+          "Sala 31-S à 34-S"
         ]
       }
     ]
@@ -51,36 +51,36 @@
       {
         "name": "1° Andar",
         "rooms": [
-          "Sala 11A à 18A",
-          "Sala 11B à 18B"
+          "Sala 11-A à 18-A",
+          "Sala 11-B à 18-B"
         ]
       },
       {
         "name": "2° Andar",
         "rooms": [
-          "Sala 21A à 28A",
-          "Sala 21B à 28B"
+          "Sala 21-A à 28-A",
+          "Sala 21-B à 28-B"
         ]
       },
       {
         "name": "3° Andar",
         "rooms": [
-          "Sala 31A à 38A",
-          "Sala 31B à 38B"
+          "Sala 31-A à 38-A",
+          "Sala 31-B à 38-B"
         ]
       },
       {
         "name": "4° Andar",
         "rooms": [
-          "Sala 41A à 48A",
-          "Sala 41B à 48B"
+          "Sala 41-A à 48-A",
+          "Sala 41-B à 48-B"
         ]
       },
       {
         "name": "5° Andar",
         "rooms": [
-          "Sala 51A à 58A",
-          "Sala 51B à 58B"
+          "Sala 51-A à 58-A",
+          "Sala 51-B à 58-B"
         ]
       },
     ]
