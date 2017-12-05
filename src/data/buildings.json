@@ -10,8 +10,94 @@
           "Secretaria Geral",
           "Biblioteca"
         ]
+      },
+      {
+        "name": "1° Andar",
+        "rooms": [
+          "Sala 10S à 14S",
+          "Quadro de Vagas",
+          "Dpt. Eletrônica",
+          "Dpt. TI"
+        ]
+      },
+      {
+        "name": "2° Andar",
+        "rooms": [
+          "Sala 21S à 22S",
+          "Labs. de Informática",
+          "Seção de Estágio"
+        ]
+      },
+      {
+        "name": "3° Andar",
+        "rooms": [
+          "Sala 31S à 34S"
+        ]
       }
     ]
-  }
+  },
+
+  {
+    "id": 1,
+    "name": "Prédio A/B",
+    "floors": [
+      {
+        "name": "Térreo",
+        "rooms": [
+          "Dpt. de Edifícios",
+          "Quadra Poliesportiva"
+        ]
+      },
+      {
+        "name": "1° Andar",
+        "rooms": [
+          "Sala 11A à 18A",
+          "Sala 11B à 18B"
+        ]
+      },
+      {
+        "name": "2° Andar",
+        "rooms": [
+          "Sala 21A à 28A",
+          "Sala 21B à 28B"
+        ]
+      },
+      {
+        "name": "3° Andar",
+        "rooms": [
+          "Sala 31A à 38A",
+          "Sala 31B à 38B"
+        ]
+      },
+      {
+        "name": "4° Andar",
+        "rooms": [
+          "Sala 41A à 48A",
+          "Sala 41B à 48B"
+        ]
+      },
+      {
+        "name": "5° Andar",
+        "rooms": [
+          "Sala 51A à 58A",
+          "Sala 51B à 58B"
+        ]
+      },
+    ]
+  },
+
+  {
+    "id": 2,
+    "name": "Centro Acadêmico",
+    "floors": [
+      {
+        "name": "Subsolo",
+        "rooms": [
+          "Cantinas",
+          "Xérox"
+        ]
+      }
+    ]
+  },
 
 ]

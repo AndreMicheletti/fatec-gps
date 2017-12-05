@@ -7,7 +7,7 @@ export default combineReducers({
   selectedBuildingId: ((state = null, action) => {
     switch (action.type) {
       case 'select_building':
-        return action.payload;
+        return (state == action.payload) ? -1 : action.payload;
       default:
         return state;
     };

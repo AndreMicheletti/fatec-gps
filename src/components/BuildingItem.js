@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  TouchableWithoutFeedback,
-  View,
-  LayoutAnimation
-} from 'react-native';
+import { Text, View, ScrollView, LayoutAnimation } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { ContainerSection } from './common';
 import * as actions from '../actions';
@@ -17,54 +13,59 @@ class BuildingItem extends Component {
   }
 
   renderFloors(floors) {
-    return floors.forEach((floor) => {
+    return floors.map((floor) => {
       return (
-        <FloorItem floor={floor} />
+        <FloorItem key={floor.name} floor={floor} />
       );
     });
   }
 
   renderDescription() {
     const { building, expanded } = this.props;
-    console.log(this.renderFloors(building.floors));
+
     if (expanded) {
       return (
-        <ContainerSection>
+        <ScrollView style={{ flexDirection: 'column' }}>
           {this.renderFloors(building.floors)}
-        </ContainerSection>
+        </ScrollView>
       );
     }
   }
 
   render() {
-    const { titleStyle } = styles;
+    const { titleStyle, touchableStyle } = styles;
     const { id, name } = this.props.building;
 
     return (
-      <TouchableWithoutFeedback
-        onPress={() => this.props.selectBuilding(id)}
-      >
+      <TouchableOpacity onPress={() => this.props.selectBuilding(id)}>
         <View>
-          <ContainerSection>
+          <ContainerSection style={touchableStyle}>
             <Text style={titleStyle}>
               {name}
             </Text>
           </ContainerSection>
-          {this.renderDescription()}
+          <View style={{ flex: 1 }}>
+            {this.renderDescription()}
+          </View>
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableOpacity>
     );
   }
 }
 
 const styles = {
   titleStyle: {
-    fontSize: 18,
-    paddingLeft: 15
+    fontSize: 22,
+    paddingLeft: 15,
+    color: '#007aff'
   },
   descriptionStyle: {
     paddingLeft: 10,
     paddingRight: 10
+  },
+  touchableStyle: {
+    borderColor: '#007aff',
+    backgroundColor: '#f8f8f8'
   }
 };
 
