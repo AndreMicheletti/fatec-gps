@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "Fatec GPS",
-    "slug": "fatec-gps",
+    "name": "FatecSP Campus",
+    "slug": "fatecsp-campus",
     "sdkVersion": "21.0.0",
     "privacy": "public",
-    "version": "0.7.0",
+    "version": "1.0.0",
     "android": {
       "package": "edu.fatecsp.fatecgps",
       "versionCode": 7,
-      "icon": "./assets/icon.png",
+      "icon": "./assets/fatecsp_logo.png",
       "permissions": [ "ACCESS_FINE_LOCATION" ],
       "config": {
         "googleMaps": {
