@@ -11,6 +11,11 @@ import {
    Dimensions
  } from 'react-native';
 
+ // Redux imports
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducers from './src/reducers';
+
 // Component imports
 import ModalContents from './src/components/ModalContents';
 import NavigationBar from './src/components/NavigationBar';
@@ -35,6 +40,7 @@ const fatecRegion = {
 }
 
 var { height, width } = Dimensions.get('window');
+var store = createStore(reducers);
 
 export default class App extends React.Component<{}> {
 
@@ -241,47 +247,51 @@ export default class App extends React.Component<{}> {
     const { mapStyle, topViewStyle, menuItem } = styles;
 
     return (
-      <View style={{ flex: 1 }}>
+      <Provider store={store}>
+        <View style={{ flex: 1 }}>
 
-        <MapView
-          {...mapSettings}
-          style={mapStyle}
-          initialRegion={fatecRegion}
-          region={fatecRegion}
-          customMapStyle={googleMapStyle}
-        >
-            {this.renderMarkers()}
-            {this.renderUserLocation()}
-            {this.renderRoute()}
-        </MapView>
+          <MapView
+            {...mapSettings}
+            style={mapStyle}
+            initialRegion={fatecRegion}
+            region={fatecRegion}
+            customMapStyle={googleMapStyle}
+          >
+              {this.renderMarkers()}
+              {this.renderUserLocation()}
+              {this.renderRoute()}
+          </MapView>
 
-        <NavigationBar locationList={markersList} onStateChange={this.onSelectionChange.bind(this)}  />
+          <NavigationBar locationList={markersList} onStateChange={this.onSelectionChange.bind(this)}  />
 
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
-        >
-          <ModalContents
-            headerText={"Legenda - Encontre sua sala"}
-            onButtonPress={() => this.setModalVisible(!this.state.modalVisible)}
-            onLinkPress={(target) => {
-              this.onSelectionChange({ origin: target, destiny: this.state.destiny });
-              this.setState({ modalVisible: false });
-            }}
+            <Modal
+              animationType="slide"
+              transparent={false}
+              visible={this.state.modalVisible}
+              onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
+            >
+              <ModalContents
+                headerText={"Legenda - Encontre sua sala"}
+                onButtonPress={() => this.setModalVisible(!this.state.modalVisible)}
+                onLinkPress={(target) => {
+                  this.onSelectionChange({ origin: target, destiny: this.state.destiny });
+                  this.setState({ modalVisible: false });
+                }}
+              />
+            </Modal>
+
+          <View style={styles.bottomViewStyle}>
+            {this.renderUserLocationMessage()}
+          </View>
+
+          <ActionButton
+            buttonColor="#03406A"
+            offsetY={85}
+            icon={<Text style={menuItem}>{"?"}</Text>}
+            onPress={() => this.setModalVisible(true)}
           />
-        </Modal>
-
-        <View style={styles.bottomViewStyle}>
-          {this.renderUserLocationMessage()}
         </View>
-        {/* <ActionButton buttonColor="#e74c3c">
-          <ActionButton.Item buttonColor="#03406A" title="Legenda" onPress={() => this.setModalVisible(true) }>
-            <Text style={menuItem}>{"?"}</Text>
-          </ActionButton.Item>
-        </ActionButton> */}
-      </View>
+      </Provider>
     );
   }
 }

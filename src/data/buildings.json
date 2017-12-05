@@ -1,0 +1,17 @@
+[
+  {
+    "id": 0,
+    "name": "Santhiago",
+    "floors": [
+      {
+        "name": "Térreo",
+        "rooms": [
+          "Sala de Estudos",
+          "Secretaria Geral",
+          "Biblioteca"
+        ]
+      }
+    ]
+  }
+
+]
